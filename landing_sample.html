@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PromoCore — Automated Subscriber Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg: #0a0b0e;
+  --bg2: #0f1115;
+  --bg3: #151820;
+  --text: #e8e8e8;
+  --text2: rgba(232,232,232,0.55);
+  --text3: rgba(232,232,232,0.35);
+  --accent: #8B2E3C;
+  --accent-bright: #b03347;
+  --accent-glow: rgba(139,46,60,0.25);
+  --accent-glow-strong: rgba(139,46,60,0.45);
+  --glass: rgba(255,255,255,0.03);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-border-accent: rgba(139,46,60,0.3);
+  --grid-size: 52px;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+  cursor: default;
+}
+
+/* Grid background */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  pointer-events: none;
+}
+
+/* Noise texture */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+* { position: relative; z-index: 1; }
+
+/* ── TYPOGRAPHY ── */
+h1, h2, h3, h4 { font-family: 'Manrope', sans-serif; font-weight: 800; letter-spacing: -0.03em; line-height: 0.97; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ── GLASS CARD ── */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+.glass-accent { border-color: var(--glass-border-accent); }
+
+/* ── ANIMATIONS ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes orbit-cw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes orbit-ccw { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+@keyframes counter-cw { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+@keyframes counter-ccw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes pulse-ring { 0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); } 50% { box-shadow: 0 0 0 12px transparent; } }
+@keyframes glow-pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+@keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  padding: 16px 5%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-inner {
+  margin: 0 auto;
+  width: 100%; max-width: 1100px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-capsule {
+  display: flex; align-items: center; gap: 32px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  padding: 10px 20px;
+}
+.nav-logo { font-size: 14px; font-weight: 800; letter-spacing: 0.02em; }
+.nav-logo span { color: var(--accent-bright); }
+.nav-links { display: flex; gap: 24px; }
+.nav-link { font-size: 13px; font-weight: 500; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+.nav-link:hover { color: var(--text); }
+.nav-live {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text2);
+}
+.nav-live-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent-bright);
+  animation: glow-pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 8px var(--accent);
+}
+.nav-dl {
+  background: var(--accent); color: #fff;
+  padding: 9px 20px; border-radius: 100px;
+  font-size: 12px; font-weight: 700; text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+.nav-dl:hover { background: var(--accent-bright); box-shadow: 0 0 40px var(--accent-glow-strong); transform: scale(1.04); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 7fr 5fr; gap: 48px;
+  align-items: center;
+  padding: 120px 5% 80px;
+  max-width: 1200px; margin: 0 auto;
+}
+
+/* Hero glow blobs */
+.hero-glow-1 {
+  position: absolute; top: 10%; left: -5%; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(139,46,60,0.1) 0%, transparent 65%);
+  border-radius: 50%; pointer-events: none; z-index: 0;
+  filter: blur(40px);
+}
+.hero-glow-2 {
+  position: absolute; top: 40%; right: -10%; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(139,46,60,0.07) 0%, transparent 65%);
+  border-radius: 50%; pointer-events: none; z-index: 0;
+  filter: blur(60px);
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(139,46,60,0.12);
+  border: 1px solid rgba(139,46,60,0.3);
+  padding: 6px 14px; border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: #C96070; margin-bottom: 28px;
+  animation: fadeUp 0.6s ease both;
+}
+.hero-badge::before { content: '●'; font-size: 7px; animation: glow-pulse 2s infinite; }
+
+.hero-left { animation: fadeUp 0.7s 0.1s ease both; }
+
+h1.hero-h1 {
+  font-size: clamp(42px, 5.5vw, 76px);
+  font-weight: 900; line-height: 0.95;
+  letter-spacing: -0.04em; margin-bottom: 24px;
+}
+h1.hero-h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--accent-bright) 0%, rgba(232,232,232,0.5) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  font-size: 16px; color: var(--text2); max-width: 480px;
+  font-weight: 400; line-height: 1.7; margin-bottom: 36px;
+}
+.hero-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+
+.btn-neon {
+  background: var(--accent); color: #fff;
+  padding: 14px 32px; border-radius: 100px;
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 28px var(--accent-glow);
+  display: inline-flex; align-items: center; gap: 8px;
+  border: none; cursor: pointer; font-family: 'Manrope', sans-serif;
+}
+.btn-neon:hover { background: var(--accent-bright); box-shadow: 0 0 50px var(--accent-glow-strong); transform: scale(1.05); }
+
+.btn-ghost {
+  background: transparent; color: var(--text);
+  padding: 14px 28px; border-radius: 100px;
+  font-size: 14px; font-weight: 600; text-decoration: none;
+  border: 1px solid var(--glass-border);
+  transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: var(--glass); }
+
+.hero-micro {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; color: var(--text3); letter-spacing: 0.08em;
+  animation: fadeUp 0.6s 0.4s ease both;
+}
+
+/* Hero right — mock window */
+.hero-right { animation: fadeUp 0.8s 0.3s ease both; }
+
+.mock-window {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 0 60px rgba(139,46,60,0.12), 0 40px 80px rgba(0,0,0,0.5);
+  animation: float 7s ease-in-out infinite;
+}
+.mock-window:hover { box-shadow: 0 0 80px rgba(139,46,60,0.2), 0 40px 80px rgba(0,0,0,0.5); }
+.mock-titlebar {
+  background: rgba(255,255,255,0.04);
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--glass-border);
+}
+.mock-dot { width: 10px; height: 10px; border-radius: 50%; }
+.mock-dot:nth-child(1) { background: #FF5F57; }
+.mock-dot:nth-child(2) { background: #FFBD2E; }
+.mock-dot:nth-child(3) { background: #28C840; }
+.mock-title-text {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--text3); margin-left: 8px; letter-spacing: 0.06em;
+}
+.mock-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.mock-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mock-stat {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border);
+  border-radius: 10px; padding: 12px;
+}
+.mock-stat-lbl {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px;
+}
+.mock-stat-val { font-size: 20px; font-weight: 800; line-height: 1; }
+.mock-stat-sub { font-size: 9px; color: #5A9A6A; margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+.mock-scan-wrapper {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+  border-radius: 10px; overflow: hidden; position: relative;
+}
+.mock-scan-line {
+  position: absolute; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.6; animation: scan 3s linear infinite;
+}
+.mock-rows { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.mock-row {
+  display: grid; grid-template-columns: 1fr 80px 70px;
+  align-items: center; padding: 7px 10px;
+  background: rgba(255,255,255,0.03); border-radius: 6px;
+}
+.mock-row span { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text2); }
+.mock-badge {
+  display: inline-flex; padding: 2px 8px; border-radius: 100px;
+  font-size: 9px; font-weight: 600; letter-spacing: 0.06em; font-family: 'JetBrains Mono', monospace;
+}
+.badge-active { background: rgba(40,160,80,0.15); color: #5ABB6A; border: 1px solid rgba(40,160,80,0.2); }
+.badge-done { background: rgba(139,46,60,0.15); color: #C96070; border: 1px solid rgba(139,46,60,0.2); }
+
+/* ── SECTION WRAPPER ── */
+.section { padding: 100px 5%; }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-label {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent-bright); margin-bottom: 18px;
+}
+.section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+
+/* ── SECTION 2: COST ── */
+.cost-section {
+  background: rgba(255,255,255,0.015);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+}
+.cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.cost-h2 { font-size: clamp(28px, 3.5vw, 44px); margin-bottom: 32px; }
+.cost-bullets { display: flex; flex-direction: column; gap: 12px; }
+.cost-bullet {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 12px; padding: 16px 18px;
+  transition: border-color 0.2s;
+}
+.cost-bullet:hover { border-color: var(--glass-border-accent); box-shadow: 0 0 20px rgba(139,46,60,0.1); }
+.cost-icon { font-size: 16px; margin-top: 1px; }
+.cost-bullet p { font-size: 13px; color: var(--text2); line-height: 1.55; }
+.section-closer { font-size: 15px; color: var(--text2); margin-top: 28px; font-style: italic; }
+
+/* Cost chart visual */
+.cost-chart-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 28px;
+}
+.chart-title {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text3); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 24px;
+}
+.bar-group { display: flex; flex-direction: column; gap: 12px; }
+.bar-row { display: flex; align-items: center; gap: 12px; }
+.bar-lbl {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text3); width: 80px; text-align: right; flex-shrink: 0;
+}
+.bar-track { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 100px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+.bar-fill.red { background: linear-gradient(90deg, var(--accent), var(--accent-bright)); box-shadow: 0 0 10px var(--accent-glow); }
+.bar-fill.green { background: linear-gradient(90deg, #2A7A45, #3DAB62); }
+.bar-val {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text2); width: 42px;
+}
+
+/* ── SOLUTION — BENTO GRID ── */
+.bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: auto auto; gap: 14px; margin-top: 48px; }
+.bento-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 20px; padding: 28px;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.bento-card:hover {
+  border-color: var(--glass-border-accent);
+  box-shadow: 0 0 30px rgba(139,46,60,0.12);
+  transform: translateY(-2px);
+}
+.bento-large { grid-column: span 2; grid-row: span 2; padding: 36px; }
+.bento-wide { grid-column: span 2; }
+.bento-accent {
+  background: var(--accent);
+  border-color: var(--accent-bright);
+  box-shadow: 0 0 40px rgba(139,46,60,0.3);
+}
+.bento-accent:hover { transform: translateY(-2px) scale(1.01); box-shadow: 0 0 60px rgba(139,46,60,0.45); }
+.bento-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: rgba(139,46,60,0.15); border: 1px solid rgba(139,46,60,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 18px;
+}
+.bento-large .bento-icon { width: 52px; height: 52px; font-size: 24px; margin-bottom: 24px; }
+.bento-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; line-height: 1.2; }
+.bento-large h3 { font-size: 22px; margin-bottom: 14px; }
+.bento-card p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+.bento-accent h3, .bento-accent p { color: #fff; }
+.bento-accent p { color: rgba(255,255,255,0.8); }
+.category-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+.cpill {
+  padding: 4px 12px; border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  background: rgba(139,46,60,0.15); border: 1px solid rgba(139,46,60,0.3);
+  color: #C96070;
+}
+
+/* ── ORBITAL SECTION ── */
+.orbital-section {
+  background: rgba(255,255,255,0.015);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+}
+.orbital-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: center; }
+.orbital-stats { display: flex; gap: 0; margin-top: 32px; }
+.ostat {
+  padding: 0 28px; border-right: 1px solid var(--glass-border);
+  first-child { padding-left: 0; }
+}
+.ostat:first-child { padding-left: 0; }
+.ostat:last-child { border-right: none; }
+.ostat-val { font-size: 36px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+.ostat-val span { color: var(--accent-bright); }
+.ostat-lbl {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px;
+}
+
+/* Orbital ring system */
+.orbital-system {
+  position: relative; width: 520px; height: 520px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto;
+}
+.orbit-ring {
+  position: absolute; border-radius: 50%;
+  border: 1px solid rgba(139,46,60,0.18);
+}
+.ring-1 { width: 240px; height: 240px; animation: orbit-cw 60s linear infinite; }
+.ring-2 { width: 380px; height: 380px; animation: orbit-ccw 100s linear infinite; }
+.ring-3 { width: 500px; height: 500px; animation: orbit-cw 140s linear infinite; }
+.orbit-hub {
+  position: absolute; width: 100px; height: 100px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,46,60,0.4) 0%, rgba(139,46,60,0.1) 60%, transparent 100%);
+  border: 1px solid rgba(139,46,60,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 0 40px rgba(139,46,60,0.3), 0 0 80px rgba(139,46,60,0.15);
+  animation: glow-pulse 3s ease-in-out infinite;
+  z-index: 10;
+}
+.orbit-node {
+  position: absolute; transform-origin: center;
+  display: flex; align-items: center; justify-content: center;
+}
+.orbit-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; backdrop-filter: blur(8px);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.orbit-icon:hover { transform: scale(1.2); box-shadow: 0 0 20px var(--accent-glow); }
+.orbit-icon.sm { width: 28px; height: 28px; font-size: 13px; }
+.orbit-icon.md { width: 32px; height: 32px; font-size: 14px; }
+
+/* Position nodes on ring-1 (radius 120) */
+.r1-n1 { transform: rotate(0deg) translateY(-120px); }
+.r1-n1 .orbit-icon { animation: counter-cw 60s linear infinite; }
+.r1-n2 { transform: rotate(60deg) translateY(-120px); }
+.r1-n2 .orbit-icon { animation: counter-cw 60s linear infinite; }
+.r1-n3 { transform: rotate(120deg) translateY(-120px); }
+.r1-n3 .orbit-icon { animation: counter-cw 60s linear infinite; }
+.r1-n4 { transform: rotate(180deg) translateY(-120px); }
+.r1-n4 .orbit-icon { animation: counter-cw 60s linear infinite; }
+.r1-n5 { transform: rotate(240deg) translateY(-120px); }
+.r1-n5 .orbit-icon { animation: counter-cw 60s linear infinite; }
+.r1-n6 { transform: rotate(300deg) translateY(-120px); }
+.r1-n6 .orbit-icon { animation: counter-cw 60s linear infinite; }
+
+/* Position nodes on ring-2 (radius 190) */
+.r2-n1 { transform: rotate(0deg) translateY(-190px); }
+.r2-n1 .orbit-icon { animation: counter-ccw 100s linear infinite; }
+.r2-n2 { transform: rotate(36deg) translateY(-190px); }
+.r2-n2 .orbit-icon { animation: counter-ccw 100s linear infinite; }
+.r2-n3 { transform: rotate(72deg) translateY(-190px); }
+.r2-n3 .orbit-icon { animation: counter-ccw 100s linear infinite; }
+.r2-n4 { transform: rotate(108deg) translateY(-190px); }
+.r2-n4 .orbit-icon { animation: counter-ccw 100s linear infinite; }
+.r2-n5 { transform: rotate(144deg) translateY(-190px); }
+.r2-n5 .orbit-icon { animation: counter-ccw 100s linear infinite; }
+.r2-n6 { transform: rotate(180deg) translateY(-190px); }
+.r2-n6 .orbit-icon { animation: counter-ccw 100s linear infinite; }
+.r2-n7 { transform: rotate(216deg) translateY(-190px); }
+.r2-n7 .orbit-icon { animation: counter-ccw 100s linear infinite; }
+.r2-n8 { transform: rotate(252deg) translateY(-190px); }
+.r2-n8 .orbit-icon { animation: counter-ccw 100s linear infinite; }
+.r2-n9 { transform: rotate(288deg) translateY(-190px); }
+.r2-n9 .orbit-icon { animation: counter-ccw 100s linear infinite; }
+.r2-n10 { transform: rotate(324deg) translateY(-190px); }
+.r2-n10 .orbit-icon { animation: counter-ccw 100s linear infinite; }
+
+/* Position nodes on ring-3 (radius 250) */
+.r3-n1 { transform: rotate(0deg) translateY(-250px); }
+.r3-n1 .orbit-icon { animation: counter-cw 140s linear infinite; }
+.r3-n2 { transform: rotate(40deg) translateY(-250px); }
+.r3-n2 .orbit-icon { animation: counter-cw 140s linear infinite; }
+.r3-n3 { transform: rotate(80deg) translateY(-250px); }
+.r3-n3 .orbit-icon { animation: counter-cw 140s linear infinite; }
+.r3-n4 { transform: rotate(120deg) translateY(-250px); }
+.r3-n4 .orbit-icon { animation: counter-cw 140s linear infinite; }
+.r3-n5 { transform: rotate(160deg) translateY(-250px); }
+.r3-n5 .orbit-icon { animation: counter-cw 140s linear infinite; }
+.r3-n6 { transform: rotate(200deg) translateY(-250px); }
+.r3-n6 .orbit-icon { animation: counter-cw 140s linear infinite; }
+.r3-n7 { transform: rotate(240deg) translateY(-250px); }
+.r3-n7 .orbit-icon { animation: counter-cw 140s linear infinite; }
+.r3-n8 { transform: rotate(280deg) translateY(-250px); }
+.r3-n8 .orbit-icon { animation: counter-cw 140s linear infinite; }
+.r3-n9 { transform: rotate(320deg) translateY(-250px); }
+.r3-n9 .orbit-icon { animation: counter-cw 140s linear infinite; }
+
+.orbit-pill {
+  position: absolute; top: 30px; right: 50px;
+  background: rgba(139,46,60,0.2); border: 1px solid rgba(139,46,60,0.4);
+  border-radius: 100px; padding: 4px 12px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: #C96070; letter-spacing: 0.1em;
+  animation: glow-pulse 2.5s ease-in-out infinite;
+  z-index: 20;
+}
+
+/* ── SECTION 4: DIFF (WHO IT'S FOR) ── */
+.diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 40px; border-radius: 16px; overflow: hidden; }
+.diff-col {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  padding: 32px 26px;
+  transition: background 0.2s;
+}
+.diff-col:hover { background: rgba(255,255,255,0.05); }
+.diff-col-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--accent-bright); margin-bottom: 14px;
+}
+.diff-col h3 { font-size: 17px; font-weight: 700; margin-bottom: 16px; }
+.diff-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.diff-list li {
+  font-size: 13px; color: var(--text2); padding-left: 16px;
+  position: relative; line-height: 1.55;
+}
+.diff-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-size: 10px; top: 3px; }
+
+/* ── WHO — contrast strip ── */
+.who-section {
+  background: #e4e4e6; color: #111;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+.who-section .section-label { color: var(--accent); }
+.who-section .section-label::before { background: var(--accent); }
+.who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+.who-card {
+  background: rgba(0,0,0,0.04); border: 2px solid transparent;
+  border-radius: 16px; padding: 32px 26px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.who-card:hover { border-color: var(--accent); background: rgba(139,46,60,0.04); }
+.who-num {
+  font-size: 52px; font-weight: 900; letter-spacing: -0.05em;
+  color: transparent; -webkit-text-stroke: 2px rgba(0,0,0,0.2);
+  line-height: 1; margin-bottom: 16px;
+}
+.who-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; color: #111; }
+.who-card p { font-size: 13px; color: #555; line-height: 1.6; }
+
+/* ── HOW IT WORKS ── */
+.how-section {
+  background: rgba(255,255,255,0.015);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+}
+.how-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px; position: relative; }
+.how-grid::before {
+  content: '';
+  position: absolute; top: 32px; left: 12.5%; right: 12.5%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139,46,60,0.4), transparent);
+}
+.how-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 28px 22px; text-align: center;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.how-card:hover { border-color: var(--glass-border-accent); box-shadow: 0 0 24px rgba(139,46,60,0.12); transform: translateY(-3px); }
+.how-num {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700;
+  margin: 0 auto 18px;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+.how-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.how-card p { font-size: 12px; color: var(--text2); line-height: 1.55; }
+
+/* ── PRICING ── */
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; align-items: start; }
+.price-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 20px; overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.price-card:hover { transform: translateY(-3px); }
+.price-card.popular {
+  border-color: rgba(139,46,60,0.5);
+  box-shadow: 0 0 30px rgba(139,46,60,0.12);
+}
+.price-card.popular:hover { border-color: var(--accent); box-shadow: 0 0 50px rgba(139,46,60,0.25); }
+.popular-tag {
+  background: var(--accent); color: #fff;
+  text-align: center; padding: 7px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+}
+.price-header { padding: 28px 24px; border-bottom: 1px solid var(--glass-border); }
+.price-type {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text3); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px;
+}
+.price-name { font-size: 20px; font-weight: 800; margin-bottom: 14px; }
+.price-amount { display: flex; align-items: baseline; gap: 4px; }
+.price-amount .num { font-size: 40px; font-weight: 900; letter-spacing: -0.04em; }
+.price-amount .period { font-size: 13px; color: var(--text2); }
+.price-body { padding: 24px; }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.price-features li {
+  font-size: 13px; color: var(--text2);
+  display: flex; gap: 10px; align-items: flex-start; line-height: 1.5;
+}
+.price-features li::before { content: '✓'; color: var(--accent-bright); font-weight: 700; flex-shrink: 0; }
+.btn-plan {
+  width: 100%; padding: 13px; border-radius: 100px;
+  font-size: 13px; font-weight: 700; text-align: center;
+  cursor: pointer; text-decoration: none; display: block;
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+  font-family: 'Manrope', sans-serif; border: none;
+}
+.btn-plan-fill {
+  background: var(--accent); color: #fff;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+.btn-plan-fill:hover { background: var(--accent-bright); box-shadow: 0 0 40px var(--accent-glow-strong); transform: scale(1.03); }
+.btn-plan-ghost {
+  background: transparent; color: var(--text);
+  border: 1px solid var(--glass-border);
+}
+.btn-plan-ghost:hover { border-color: rgba(255,255,255,0.2); background: var(--glass); }
+
+/* ── FINAL CTA ── */
+.final-cta-section { padding: 80px 5%; }
+.cta-card {
+  max-width: 900px; margin: 0 auto;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 28px; padding: 80px 60px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.cta-card::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(139,46,60,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-card h2 { font-size: clamp(32px, 5vw, 60px); margin-bottom: 32px; }
+.cta-micro {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text3); letter-spacing: 0.1em; margin-top: 14px;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--glass-border);
+  padding: 60px 5% 40px;
+  position: relative; overflow: hidden;
+}
+.footer-watermark {
+  position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+  font-size: 15vw; font-weight: 900; white-space: nowrap;
+  color: rgba(255,255,255,0.025); letter-spacing: -0.05em; pointer-events: none;
+  line-height: 1;
+}
+.footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 40px; }
+.footer-brand p { font-size: 13px; color: var(--text3); margin-top: 12px; line-height: 1.6; max-width: 220px; }
+.footer-col-title {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.15em; color: var(--text3); margin-bottom: 16px;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a { font-size: 13px; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-status {
+  margin-top: 48px; padding-top: 20px;
+  border-top: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-status-left {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text3); letter-spacing: 0.08em;
+}
+.status-ok {
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #5ABB6A;
+}
+.status-ok::before { content: '●'; animation: glow-pulse 2s infinite; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .cost-grid, .orbital-grid, .footer-inner { grid-template-columns: 1fr; }
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .bento-large { grid-column: span 2; grid-row: span 1; }
+  .bento-wide { grid-column: span 2; }
+  .who-grid, .diff-grid, .pricing-grid, .how-grid { grid-template-columns: 1fr; }
+  .how-grid::before { display: none; }
+  .orbital-system { width: 320px; height: 320px; transform: scale(0.6); }
+  .nav-links { display: none; }
+  .cta-card { padding: 48px 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- GLOW BLOBS -->
+<div class="hero-glow-1" style="position:fixed"></div>
+<div class="hero-glow-2" style="position:fixed"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-capsule">
+      <div class="nav-logo">Promo<span>Core</span></div>
+      <div class="nav-links">
+        <a href="#solution" class="nav-link">Platform</a>
+        <a href="#how" class="nav-link">How it works</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+      </div>
+      <div class="nav-live">
+        <div class="nav-live-dot"></div>
+        <span>System Live</span>
+      </div>
+    </div>
+    <a href="#download" class="nav-dl">Download</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div style="max-width:1200px;margin:0 auto;padding:0 5%">
+  <section class="hero" style="padding-left:0;padding-right:0;max-width:none">
+    <div class="hero-left">
+      <div class="hero-badge">Promo Automation Platform</div>
+      <h1 class="hero-h1">Complete Promo Deals Faster with <em>Automated Subscriber Accounts</em></h1>
+      <p class="hero-sub">Automated accounts that subscribe, tip, message, and engage to help you hit required numbers faster without sacrificing real fans.</p>
+      <div class="hero-actions">
+        <a href="#download" class="btn-neon">↓ Download Platform</a>
+        <a href="#pricing" class="btn-ghost">View Pricing →</a>
+      </div>
+      <p class="hero-micro">// download is free. payment required to activate features.</p>
+    </div>
+    <div class="hero-right">
+      <div class="mock-window">
+        <div class="mock-titlebar">
+          <div class="mock-dot"></div>
+          <div class="mock-dot"></div>
+          <div class="mock-dot"></div>
+          <span class="mock-title-text">PromoCore — Campaign Manager</span>
+        </div>
+        <div class="mock-body">
+          <div class="mock-stat-row">
+            <div class="mock-stat">
+              <div class="mock-stat-lbl">Subs Delivered</div>
+              <div class="mock-stat-val">2,840</div>
+              <div class="mock-stat-sub">↑ +340 today</div>
+            </div>
+            <div class="mock-stat">
+              <div class="mock-stat-lbl">Eng. Rate</div>
+              <div class="mock-stat-val">6.2%</div>
+              <div class="mock-stat-sub">On target</div>
+            </div>
+            <div class="mock-stat">
+              <div class="mock-stat-lbl">Accts Active</div>
+              <div class="mock-stat-val">184</div>
+              <div class="mock-stat-sub">Pool healthy</div>
+            </div>
+          </div>
+          <div class="mock-scan-wrapper">
+            <div class="mock-scan-line"></div>
+            <div class="mock-rows">
+              <div class="mock-row">
+                <span>Creator A — Oct</span>
+                <span>487 / 500</span>
+                <span class="mock-badge badge-active">Active</span>
+              </div>
+              <div class="mock-row">
+                <span>Creator B — Eng</span>
+                <span>156 / 200</span>
+                <span class="mock-badge badge-active">Active</span>
+              </div>
+              <div class="mock-row">
+                <span>Creator C — Tips</span>
+                <span>50 / 50</span>
+                <span class="mock-badge badge-done">Done</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- SECTION 2: COST -->
+<section class="section cost-section">
+  <div class="section-inner">
+    <div class="cost-grid">
+      <div class="reveal">
+        <div class="section-label">The Problem</div>
+        <h2 class="cost-h2">Promo Strategies Cost You More Than Just Real Fans</h2>
+        <div class="cost-bullets">
+          <div class="cost-bullet">
+            <div class="cost-icon">↗</div>
+            <p>You send real earners to other pages, diluting your core funnel.</p>
+          </div>
+          <div class="cost-bullet">
+            <div class="cost-icon">⟳</div>
+            <p>You over-post to hit required numbers and exhaust your content.</p>
+          </div>
+          <div class="cost-bullet">
+            <div class="cost-icon">⏳</div>
+            <p>You slow your own growth while trying to fulfill agreements.</p>
+          </div>
+          <div class="cost-bullet">
+            <div class="cost-icon">📋</div>
+            <p>You drag agreements out longer than necessary, tying up capacity.</p>
+          </div>
+        </div>
+        <p class="section-closer">There's a better way to complete your agreements.</p>
+      </div>
+      <div class="reveal delay-1">
+        <div class="cost-chart-card">
+          <div class="chart-title">// time_spent — manual vs automated</div>
+          <div class="bar-group">
+            <div class="bar-row">
+              <span class="bar-lbl">Manual</span>
+              <div class="bar-track"><div class="bar-fill red" style="width:85%"></div></div>
+              <span class="bar-val">~12h</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-lbl">Automated</span>
+              <div class="bar-track"><div class="bar-fill green" style="width:18%"></div></div>
+              <span class="bar-val">~2h</span>
+            </div>
+          </div>
+          <div style="margin-top:28px;border-top:1px solid var(--glass-border);padding-top:24px">
+            <div class="chart-title">// agreement_completion — days</div>
+            <div class="bar-group">
+              <div class="bar-row">
+                <span class="bar-lbl">Manual</span>
+                <div class="bar-track"><div class="bar-fill red" style="width:90%"></div></div>
+                <span class="bar-val">9 days</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-lbl">Automated</span>
+                <div class="bar-track"><div class="bar-fill green" style="width:22%"></div></div>
+                <span class="bar-val">2 days</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SOLUTION — BENTO -->
+<section class="section" id="solution">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">The Platform</div>
+      <h2 style="font-size:clamp(28px,3.5vw,44px)">Automated Subscriber &amp; Engagement Accounts</h2>
+    </div>
+    <div class="bento">
+      <!-- Large feature card -->
+      <div class="bento-card bento-large reveal">
+        <div class="bento-icon">👥</div>
+        <h3>Subscriber Bots</h3>
+        <p>Deploy automated subscriber accounts to hit required fan counts on schedule. Controlled pacing to match your agreement timelines precisely.</p>
+        <div class="category-pills">
+          <span class="cpill">Paced Delivery</span>
+          <span class="cpill">Account Pool</span>
+          <span class="cpill">Real Profiles</span>
+          <span class="cpill">Geo Targeting</span>
+        </div>
+      </div>
+      <!-- Accent card -->
+      <div class="bento-card bento-accent reveal delay-1">
+        <div style="font-size:36px;margin-bottom:16px">⚡</div>
+        <h3>Built for Operators</h3>
+        <p>Designed specifically for OnlyFans promo ecosystems. Full delivery control from day one.</p>
+      </div>
+      <!-- Normal card -->
+      <div class="bento-card reveal delay-2">
+        <div class="bento-icon">💬</div>
+        <h3>Engagement Automation</h3>
+        <p>Automated likes and visible activity distributed naturally over time.</p>
+      </div>
+      <!-- Wide card -->
+      <div class="bento-card bento-wide reveal delay-1">
+        <div class="bento-icon">💸</div>
+        <h3>Tip &amp; Message Activity</h3>
+        <p>Simulate tip and message interactions. Supports agreements that require demonstrated revenue activity alongside subscriber counts. Works standalone or layered over subscriber delivery.</p>
+      </div>
+      <!-- Normal card -->
+      <div class="bento-card reveal delay-2">
+        <div class="bento-icon">⚙️</div>
+        <h3>Deployment Control</h3>
+        <p>You control every aspect of delivery speed, pacing, and scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: ORBITAL — DIFFERENTIATION -->
+<section class="section orbital-section">
+  <div class="section-inner">
+    <div class="orbital-grid">
+      <div class="reveal">
+        <div class="section-label">Quality &amp; Stability</div>
+        <h2 style="font-size:clamp(28px,3vw,42px)">Built for Quality and Stability</h2>
+        <p style="font-size:14px;color:var(--text2);margin-top:16px;line-height:1.7;max-width:380px">
+          Anyone can send bots. We build accounts that actually behave like users. Three layers of infrastructure working in tandem.
+        </p>
+        <div class="orbital-stats">
+          <div class="ostat">
+            <div class="ostat-val"><span>3</span>+</div>
+            <div class="ostat-lbl">Account tiers</div>
+          </div>
+          <div class="ostat">
+            <div class="ostat-val"><span>800</span>+</div>
+            <div class="ostat-lbl">Account pool</div>
+          </div>
+          <div class="ostat">
+            <div class="ostat-val"><span>24</span>/7</div>
+            <div class="ostat-lbl">Pipeline active</div>
+          </div>
+        </div>
+        <div style="margin-top:32px">
+          <!-- Diff columns -->
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="glass" style="padding:16px 20px;border-radius:12px">
+              <div class="diff-col-tag" style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent-bright);margin-bottom:8px">Behavior Layer</div>
+              <p style="font-size:12px;color:var(--text2);line-height:1.6">Controlled subscription pacing · Natural interaction patterns · Likes and comments distributed over time</p>
+            </div>
+            <div class="glass" style="padding:16px 20px;border-radius:12px">
+              <div class="diff-col-tag" style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent-bright);margin-bottom:8px">Account Structure</div>
+              <p style="font-size:12px;color:var(--text2);line-height:1.6">Mix of aged and fresh accounts · Profile diversity · Geographic distribution · Ongoing creation pipeline</p>
+            </div>
+            <div class="glass" style="padding:16px 20px;border-radius:12px">
+              <div class="diff-col-tag" style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent-bright);margin-bottom:8px">Deployment Control</div>
+              <p style="font-size:12px;color:var(--text2);line-height:1.6">You control delivery speed · Adjust pacing to match agreements · Designed to reduce detection risk</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORBITAL RING SYSTEM -->
+      <div class="reveal delay-2">
+        <div class="orbital-system">
+          <div class="orbit-pill">+800 accounts</div>
+          <!-- Rings -->
+          <div class="orbit-ring ring-1">
+            <div class="orbit-node r1-n1"><div class="orbit-icon">👤</div></div>
+            <div class="orbit-node r1-n2"><div class="orbit-icon">💬</div></div>
+            <div class="orbit-node r1-n3"><div class="orbit-icon">❤️</div></div>
+            <div class="orbit-node r1-n4"><div class="orbit-icon">💸</div></div>
+            <div class="orbit-node r1-n5"><div class="orbit-icon">📍</div></div>
+            <div class="orbit-node r1-n6"><div class="orbit-icon">⏱</div></div>
+          </div>
+          <div class="orbit-ring ring-2">
+            <div class="orbit-node r2-n1"><div class="orbit-icon md">👥</div></div>
+            <div class="orbit-node r2-n2"><div class="orbit-icon md">🔒</div></div>
+            <div class="orbit-node r2-n3"><div class="orbit-icon md">📱</div></div>
+            <div class="orbit-node r2-n4"><div class="orbit-icon md">🌍</div></div>
+            <div class="orbit-node r2-n5"><div class="orbit-icon md">🔄</div></div>
+            <div class="orbit-node r2-n6"><div class="orbit-icon md">📊</div></div>
+            <div class="orbit-node r2-n7"><div class="orbit-icon md">⚡</div></div>
+            <div class="orbit-node r2-n8"><div class="orbit-icon md">🎯</div></div>
+            <div class="orbit-node r2-n9"><div class="orbit-icon md">🛡</div></div>
+            <div class="orbit-node r2-n10"><div class="orbit-icon md">📈</div></div>
+          </div>
+          <div class="orbit-ring ring-3">
+            <div class="orbit-node r3-n1"><div class="orbit-icon sm">✓</div></div>
+            <div class="orbit-node r3-n2"><div class="orbit-icon sm">●</div></div>
+            <div class="orbit-node r3-n3"><div class="orbit-icon sm">◆</div></div>
+            <div class="orbit-node r3-n4"><div class="orbit-icon sm">▸</div></div>
+            <div class="orbit-node r3-n5"><div class="orbit-icon sm">○</div></div>
+            <div class="orbit-node r3-n6"><div class="orbit-icon sm">✦</div></div>
+            <div class="orbit-node r3-n7"><div class="orbit-icon sm">■</div></div>
+            <div class="orbit-node r3-n8"><div class="orbit-icon sm">◇</div></div>
+            <div class="orbit-node r3-n9"><div class="orbit-icon sm">▪</div></div>
+          </div>
+          <!-- Hub -->
+          <div class="orbit-hub">⚙️</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: WHO — contrast strip -->
+<section class="section who-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Who It's For</div>
+      <h2 style="color:#111;font-size:clamp(28px,3.5vw,44px)">Built for Operators Who Understand the System</h2>
+    </div>
+    <div class="who-grid">
+      <div class="who-card reveal">
+        <div class="who-num">01</div>
+        <h3>Agencies</h3>
+        <p>Managing multiple models across active promo agreements. Scale delivery without adding manual hours or burning your real fan base.</p>
+      </div>
+      <div class="who-card reveal delay-1">
+        <div class="who-num">02</div>
+        <h3>High-Volume Promo Operators</h3>
+        <p>Running Telegram, IG, or Reddit promo deals at volume. Hit required numbers consistently across every agreement.</p>
+      </div>
+      <div class="who-card reveal delay-2">
+        <div class="who-num">03</div>
+        <h3>Advanced Solo Creators</h3>
+        <p>Fulfilling collaboration agreements without sacrificing your own content schedule or real subscriber relationships.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: HOW IT WORKS -->
+<section class="section how-section" id="how">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center">
+      <div class="section-label" style="justify-content:center">How It Works</div>
+      <h2 style="font-size:clamp(28px,3.5vw,44px)">Up and Running in Four Steps</h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-card reveal">
+        <div class="how-num">01</div>
+        <h3>Download the Platform</h3>
+        <p>Available for Windows and Mac. Free to download, no account needed upfront.</p>
+      </div>
+      <div class="how-card reveal delay-1">
+        <div class="how-num">02</div>
+        <h3>Connect Your Account</h3>
+        <p>Link your PromoCore account and configure your target creator profiles.</p>
+      </div>
+      <div class="how-card reveal delay-2">
+        <div class="how-num">03</div>
+        <h3>Activate Subscription</h3>
+        <p>Select your plan and activate. Features unlock immediately upon payment.</p>
+      </div>
+      <div class="how-card reveal delay-3">
+        <div class="how-num">04</div>
+        <h3>Launch Subscribers</h3>
+        <p>Configure pacing, set targets, and deploy. Monitor delivery in real time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: PRICING -->
+<section class="section" id="pricing">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center">
+      <div class="section-label" style="justify-content:center">Pricing</div>
+      <h2 style="font-size:clamp(28px,3.5vw,44px)">Simple, Operator-Friendly Plans</h2>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card popular reveal">
+        <div class="popular-tag">// most popular</div>
+        <div class="price-header">
+          <div class="price-type">subscription</div>
+          <div class="price-name">Monthly Access</div>
+          <div class="price-amount">
+            <span class="num">$149</span>
+            <span class="period">/ month</span>
+          </div>
+        </div>
+        <div class="price-body">
+          <ul class="price-features">
+            <li>Full subscriber bot access</li>
+            <li>Engagement automation included</li>
+            <li>Unlimited campaigns</li>
+            <li>Priority account pool</li>
+            <li>Delivery speed controls</li>
+            <li>Cancel anytime</li>
+          </ul>
+          <button class="btn-plan btn-plan-fill">Get Started</button>
+        </div>
+      </div>
+      <div class="price-card reveal delay-1">
+        <div class="price-header">
+          <div class="price-type">one-time</div>
+          <div class="price-name">Subscriber Pack</div>
+          <div class="price-amount">
+            <span class="num">$79</span>
+            <span class="period">per pack</span>
+          </div>
+        </div>
+        <div class="price-body">
+          <ul class="price-features">
+            <li>500 automated subscriber accounts</li>
+            <li>Paced delivery over 3–7 days</li>
+            <li>Account diversity included</li>
+            <li>No subscription required</li>
+            <li>Purchase multiple packs</li>
+          </ul>
+          <button class="btn-plan btn-plan-ghost">Buy Pack</button>
+        </div>
+      </div>
+      <div class="price-card reveal delay-2">
+        <div class="price-header">
+          <div class="price-type">one-time</div>
+          <div class="price-name">Engagement Pack</div>
+          <div class="price-amount">
+            <span class="num">$49</span>
+            <span class="period">per pack</span>
+          </div>
+        </div>
+        <div class="price-body">
+          <ul class="price-features">
+            <li>Likes, comments, and views</li>
+            <li>Distributed over natural timeframes</li>
+            <li>Tip and message simulation</li>
+            <li>Works standalone or with subs</li>
+            <li>No subscription required</li>
+          </ul>
+          <button class="btn-plan btn-plan-ghost">Buy Pack</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta-section" id="download">
+  <div class="cta-card reveal">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px">Get Started</div>
+    <h2>Finish Agreements Faster.<br>Keep Your Real Fans.</h2>
+    <div style="margin-top:36px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="#" class="btn-neon" style="font-size:16px;padding:18px 44px">↓ Download Now</a>
+    </div>
+    <p class="cta-micro">// windows &amp; mac supported &nbsp;·&nbsp; free to download &nbsp;·&nbsp; payment activates features</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-watermark">PROMOCORE</div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="nav-logo" style="font-size:16px">Promo<span style="color:var(--accent-bright)">Core</span></div>
+      <p>Automated subscriber and engagement platform for OnlyFans promo operators.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Platform</div>
+      <ul class="footer-links">
+        <li><a href="#">Download</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Changelog</a></li>
+        <li><a href="#">Docs</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Support</div>
+      <ul class="footer-links">
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Status</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Refund Policy</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Connect</div>
+      <ul class="footer-links">
+        <li><a href="#">Telegram</a></li>
+        <li><a href="#">Twitter</a></li>
+        <li><a href="#">Discord</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="footer-status">
+      <span class="footer-status-left">© 2025 PromoCore · All rights reserved</span>
+      <span class="status-ok">All Systems Operational</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+reveals.forEach(el => io.observe(el));
+
+// Animate bars when visible
+const bars = document.querySelectorAll('.bar-fill');
+const barIO = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const w = el.style.width;
+      el.style.width = '0';
+      setTimeout(() => { el.style.width = w; }, 100);
+      barIO.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+bars.forEach(b => { const w = b.style.width; b.style.width = '0'; barIO.observe(b); });
+</script>
+</body>
+</html>
