@@ -1,6 +1,6 @@
 "use client";
 
-import { useBarReveal } from "@/hooks/useReveal";
+import { useReveal } from "@/hooks/useReveal";
 
 const bullets = [
   {
@@ -28,24 +28,24 @@ const bullets = [
 const comparisons = [
   {
     label: "TIME_SPENT — PER WEEK",
-    beforeVal: "~12 hrs",
-    afterVal: "~2 hrs",
+    beforeVal: "~12", beforeUnit: "hrs",
+    afterVal: "~2", afterUnit: "hrs",
     beforePct: "85%",
-    afterPct: "17%",
-    reduction: "6× less",
+    afterPct: "14%",
+    reduction: "↓ 6× less",
   },
   {
     label: "AGREEMENT_COMPLETION — DAYS",
-    beforeVal: "9 days",
-    afterVal: "2 days",
-    beforePct: "90%",
-    afterPct: "20%",
-    reduction: "4.5× faster",
+    beforeVal: "9", beforeUnit: "days",
+    afterVal: "2", afterUnit: "days",
+    beforePct: "85%",
+    afterPct: "19%",
+    reduction: "↓ 4.5× faster",
   },
 ];
 
 export default function CostSection() {
-  useBarReveal();
+  useReveal();
 
   return (
     <section
@@ -150,11 +150,11 @@ export default function CostSection() {
           <div className="reveal delay-1">
             <div
               style={{
-                background: "var(--pc-bg3)",
-                border: "1px solid var(--pc-glass-border)",
-                borderRadius: "20px",
+                background: "rgba(10,11,14,0.95)",
+                border: "1px solid rgba(139,46,60,0.25)",
+                borderRadius: "16px",
                 overflow: "hidden",
-                boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
+                boxShadow: "0 16px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,46,60,0.08)",
               }}
             >
               {/* Panel header */}
@@ -190,7 +190,7 @@ export default function CostSection() {
                   <div
                     key={c.label}
                     style={{
-                      padding: "28px 28px 24px",
+                      padding: "18px 24px",
                       borderBottom: idx < comparisons.length - 1 ? "1px solid var(--pc-glass-border)" : "none",
                     }}
                   >
@@ -198,24 +198,25 @@ export default function CostSection() {
                     <div
                       style={{
                         fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-                        fontSize: "9px",
-                        color: "var(--pc-text3)",
+                        fontSize: "13px",
+                        fontWeight: 700,
+                        color: "var(--pc-text2)",
                         textTransform: "uppercase",
                         letterSpacing: "0.14em",
-                        marginBottom: "20px",
+                        marginBottom: "14px",
                       }}
                     >
                       {c.label}
                     </div>
 
                     {/* BEFORE row */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "6px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
                       <span
                         style={{
                           fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
                           fontSize: "10px",
                           color: "rgba(220,70,80,0.65)",
-                          width: "54px",
+                          width: "46px",
                           textAlign: "right",
                           flexShrink: 0,
                           textTransform: "uppercase",
@@ -227,7 +228,7 @@ export default function CostSection() {
                       <div
                         style={{
                           flex: 1,
-                          height: "22px",
+                          height: "18px",
                           background: "rgba(255,255,255,0.04)",
                           borderRadius: "5px",
                           overflow: "hidden",
@@ -240,33 +241,52 @@ export default function CostSection() {
                             height: "100%",
                             borderRadius: "5px",
                             background: "linear-gradient(90deg, rgba(176,51,71,0.55), rgba(220,60,80,0.85))",
-                            boxShadow: "0 0 16px rgba(200,55,70,0.25)",
-                            transition: "width 1.4s cubic-bezier(0.4,0,0.2,1)",
+                            boxShadow: "0 0 12px rgba(200,55,70,0.25)",
+                            transition: "width 1.6s cubic-bezier(0.25,1,0.5,1) 0.1s",
                           }}
                         />
                       </div>
-                      <span
+                      <div
                         style={{
-                          fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-                          fontSize: "20px",
-                          fontWeight: 700,
-                          color: "rgba(220,70,80,0.85)",
-                          width: "70px",
-                          letterSpacing: "-0.02em",
+                          display: "flex",
+                          alignItems: "baseline",
+                          gap: "4px",
+                          width: "58px",
+                          flexShrink: 0,
                         }}
                       >
-                        {c.beforeVal}
-                      </span>
+                        <span
+                          style={{
+                            fontSize: "14px",
+                            fontWeight: 700,
+                            color: "rgba(220,70,80,0.9)",
+                            fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
+                            letterSpacing: "-0.01em",
+                          }}
+                        >
+                          {c.beforeVal}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: "10px",
+                            fontWeight: 400,
+                            color: "rgba(220,70,80,0.65)",
+                            fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
+                          }}
+                        >
+                          {c.beforeUnit}
+                        </span>
+                      </div>
                     </div>
 
                     {/* AFTER row */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                       <span
                         style={{
                           fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
                           fontSize: "10px",
                           color: "rgba(61,171,98,0.65)",
-                          width: "54px",
+                          width: "46px",
                           textAlign: "right",
                           flexShrink: 0,
                           textTransform: "uppercase",
@@ -275,56 +295,76 @@ export default function CostSection() {
                       >
                         After
                       </span>
+                      <div style={{ flex: 1 }}>
+                        <div
+                          style={{
+                            height: "18px",
+                            background: "rgba(255,255,255,0.04)",
+                            borderRadius: "5px",
+                            overflow: "hidden",
+                          }}
+                        >
+                          <div
+                            className="bar-fill"
+                            style={{
+                              width: c.afterPct,
+                              height: "100%",
+                              borderRadius: "5px",
+                              background: "linear-gradient(90deg, rgba(42,122,69,0.55), rgba(61,171,98,0.85))",
+                              boxShadow: "0 0 12px rgba(55,155,90,0.25)",
+                              transformOrigin: "left",
+                              transitionDelay: "0.5s", // delay the after bar slightly
+                            }}
+                          />
+                        </div>
+                      </div>
                       <div
                         style={{
-                          flex: 1,
-                          height: "22px",
-                          background: "rgba(255,255,255,0.04)",
-                          borderRadius: "5px",
-                          overflow: "hidden",
+                          display: "flex",
+                          alignItems: "baseline",
+                          gap: "4px",
+                          width: "58px",
+                          flexShrink: 0,
                         }}
                       >
-                        <div
-                          className="bar-fill"
+                        <span
                           style={{
-                            width: c.afterPct,
-                            height: "100%",
-                            borderRadius: "5px",
-                            background: "linear-gradient(90deg, rgba(42,122,69,0.55), rgba(61,171,98,0.85))",
-                            boxShadow: "0 0 16px rgba(55,155,90,0.25)",
-                            transition: "width 1.4s cubic-bezier(0.4,0,0.2,1) 0.2s",
+                            fontSize: "14px",
+                            fontWeight: 700,
+                            color: "rgba(61,171,98,0.9)",
+                            fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
+                            letterSpacing: "-0.01em",
                           }}
-                        />
+                        >
+                          {c.afterVal}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: "10px",
+                            fontWeight: 400,
+                            color: "rgba(61,171,98,0.65)",
+                            fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
+                          }}
+                        >
+                          {c.afterUnit}
+                        </span>
                       </div>
-                      <span
-                        style={{
-                          fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-                          fontSize: "20px",
-                          fontWeight: 700,
-                          color: "rgba(61,171,98,0.88)",
-                          width: "70px",
-                          letterSpacing: "-0.02em",
-                        }}
-                      >
-                        {c.afterVal}
-                      </span>
                     </div>
-
                     {/* Reduction pill */}
-                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "12px" }}>
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
                       <span
                         style={{
                           fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-                          fontSize: "10px",
-                          color: "rgba(61,171,98,0.8)",
-                          background: "rgba(61,171,98,0.08)",
-                          border: "1px solid rgba(61,171,98,0.2)",
+                          fontSize: "11px",
+                          color: "rgba(61,171,98,0.9)",
+                          background: "rgba(61,171,98,0.1)",
+                          border: "1px solid rgba(61,171,98,0.3)",
                           borderRadius: "100px",
-                          padding: "3px 10px",
+                          padding: "5px 14px",
                           letterSpacing: "0.04em",
                         }}
                       >
-                        ↓ {c.reduction}
+                        {c.reduction}
                       </span>
                     </div>
                   </div>

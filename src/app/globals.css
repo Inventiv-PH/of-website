@@ -335,23 +335,37 @@ html.light {
 }
 
 @keyframes popOut {
-  0%   { opacity: 0; transform: scale(0.55) translateY(10px); }
-  65%  { opacity: 1; transform: scale(1.07) translateY(-2px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
-}
-@keyframes neonPulse {
-  0%, 100% {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,46,60,0.2);
-    border-color: rgba(139,46,60,0.5);
+  0% {
+    opacity: 0;
+    transform: scale(0.55) translateY(10px);
   }
+
+  65% {
+    opacity: 1;
+    transform: scale(1.07) translateY(-2px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes neonPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(139, 46, 60, 0.1);
+    border-color: rgba(139, 46, 60, 0.3);
+  }
+
   50% {
     box-shadow:
-      0 8px 32px rgba(0,0,0,0.4),
-      0 0 0 2px rgba(255,90,118,1),
-      0 0 18px rgba(255,90,118,0.9),
-      0 0 42px rgba(201,96,112,0.75),
-      0 0 75px rgba(139,46,60,0.55);
-    border-color: rgba(255,110,138,1);
+      0 8px 32px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(230, 70, 95, 0.6),
+      0 0 12px rgba(230, 70, 95, 0.5),
+      0 0 24px rgba(139, 46, 60, 0.4);
+    border-color: rgba(230, 70, 95, 0.7);
   }
 }
 
@@ -617,6 +631,20 @@ html.light {
   .step-label {
     display: none !important;
   }
+}
+
+/* ── DASHBOARD BAR ANIMATIONS ── */
+.reveal:not(.visible) .bar-fill {
+  transform: scaleX(0);
+}
+
+.reveal.visible .bar-fill {
+  transform: scaleX(1);
+  transition: transform 1.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bar-fill {
+  transform-origin: left;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -6,9 +6,9 @@ import AnimatedLines from "@/components/ui/AnimatedLines";
 
 const SEGMENTS = [
   { text: "Complete Promo Deals", gradient: false },
-  { text: "Faster with",          gradient: false },
-  { text: "Automated Subscriber", gradient: true  },
-  { text: "Accounts",             gradient: true  },
+  { text: "Faster with", gradient: false },
+  { text: "Automated Subscriber", gradient: true },
+  { text: "Accounts", gradient: true },
 ] as const;
 
 const FULL = SEGMENTS.map(s => s.text).join("");
@@ -21,7 +21,7 @@ const CUM = SEGMENTS.reduce<number[]>((acc, s) => {
 const SUBLINE = "Automated accounts that subscribe, tip, message, and engage to help you hit required numbers faster without sacrificing real fans.";
 
 export default function Hero() {
-  const [hCount, setHCount]       = useState(0);
+  const [hCount, setHCount] = useState(0);
   const [showBelow, setShowBelow] = useState(false);
 
   const headlineDone = hCount >= FULL.length;
@@ -88,10 +88,10 @@ export default function Hero() {
             }}
           >
             {SEGMENTS.map((seg, idx) => {
-              const segStart  = idx === 0 ? 0 : CUM[idx - 1];
+              const segStart = idx === 0 ? 0 : CUM[idx - 1];
               const charsHere = Math.max(0, Math.min(hCount - segStart, seg.text.length));
-              const visible   = seg.text.slice(0, charsHere);
-              const isActive  = hCount > segStart && hCount <= CUM[idx];
+              const visible = seg.text.slice(0, charsHere);
+              const isActive = hCount > segStart && hCount <= CUM[idx];
 
               if (charsHere === 0 && !isActive) return null;
 
@@ -105,7 +105,7 @@ export default function Hero() {
               return (
                 <span key={idx} style={{ display: "block", ...gradStyle }}>
                   {visible}
-                  {isActive && (
+                  {isActive && !headlineDone && (
                     <span
                       className="animate-blink"
                       style={{
@@ -200,8 +200,8 @@ export default function Hero() {
                 {
                   icon: (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                      <polyline points="22,6 12,13 2,6"/>
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                      <polyline points="22,6 12,13 2,6" />
                     </svg>
                   ),
                   label: "Automated Messaging",
@@ -211,8 +211,8 @@ export default function Hero() {
                 {
                   icon: (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="12" y1="1" x2="12" y2="23"/>
-                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                      <line x1="12" y1="1" x2="12" y2="23" />
+                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                     </svg>
                   ),
                   label: "Automated Tipping",
@@ -222,7 +222,7 @@ export default function Hero() {
                 {
                   icon: (
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                     </svg>
                   ),
                   label: "Live Monitoring",
@@ -232,10 +232,10 @@ export default function Hero() {
                 {
                   icon: (
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                      <circle cx="9" cy="7" r="4"/>
-                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                     </svg>
                   ),
                   label: "Pool of Subscribers",
@@ -243,9 +243,9 @@ export default function Hero() {
                 },
               ] as { icon: React.ReactNode; label: string; top: string; left: string; delay: string; neonDelay: string; size: "lg" | "base" | "sm" }[]).map(({ icon, label, top, left, delay, neonDelay, size }) => {
                 const s = {
-                  lg:   { iconBox: "34px", text: "14px", pad: "9px 20px 9px 9px",  gap: "10px" },
-                  base: { iconBox: "28px", text: "12px", pad: "7px 16px 7px 7px",  gap: "8px"  },
-                  sm:   { iconBox: "24px", text: "11px", pad: "6px 13px 6px 6px",  gap: "7px"  },
+                  lg: { iconBox: "34px", text: "14px", pad: "9px 20px 9px 9px", gap: "10px" },
+                  base: { iconBox: "28px", text: "12px", pad: "7px 16px 7px 7px", gap: "8px" },
+                  sm: { iconBox: "24px", text: "11px", pad: "6px 13px 6px 6px", gap: "7px" },
                 }[size];
                 return (
                   <div
@@ -263,7 +263,7 @@ export default function Hero() {
                       display: "flex",
                       alignItems: "center",
                       gap: s.gap,
-                      animation: `popOut 0.5s cubic-bezier(0.34,1.56,0.64,1) ${delay} both, neonPulse 2.5s ease-in-out ${neonDelay} infinite`,
+                      animation: `popOut 0.5s cubic-bezier(0.34,1.56,0.64,1) ${delay} both, neonPulse 6s ease-in-out ${neonDelay} infinite`,
                       whiteSpace: "nowrap",
                       zIndex: 20,
                     }}

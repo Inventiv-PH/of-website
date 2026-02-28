@@ -129,7 +129,7 @@ export default function OrbitalSection() {
               <div
                 style={{
                   position: "absolute",
-                  left: "11px",
+                  left: "33.5px", // Center of the 68px circle
                   top: "12px",
                   bottom: "12px",
                   width: "1px",
@@ -143,21 +143,21 @@ export default function OrbitalSection() {
                   key={l.tag}
                   style={{
                     display: "flex",
-                    gap: "22px",
-                    marginBottom: i < layers.length - 1 ? "26px" : 0,
+                    gap: "28px",
+                    marginBottom: i < layers.length - 1 ? "42px" : 0,
                     alignItems: "flex-start",
                   }}
                 >
                   {/* Numbered dot */}
                   <div
                     style={{
-                      width: "44px",
-                      height: "44px",
+                      width: "68px",
+                      height: "68px",
                       borderRadius: "50%",
                       background: i === 0
-                        ? "rgba(139,46,60,0.35)"
-                        : "rgba(139,46,60,0.1)",
-                      border: `1px solid ${i === 0 ? "rgba(176,51,71,0.6)" : "rgba(139,46,60,0.28)"}`,
+                        ? "rgba(139,46,60,0.25)"
+                        : "rgba(139,46,60,0.08)",
+                      border: `1px solid ${i === 0 ? "rgba(176,51,71,0.5)" : "rgba(139,46,60,0.25)"}`,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -165,7 +165,7 @@ export default function OrbitalSection() {
                       position: "relative",
                       zIndex: 1,
                       fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-                      fontSize: "14px",
+                      fontSize: "20px",
                       fontWeight: 700,
                       color: i === 0 ? "#C96070" : "var(--pc-text3)",
                     }}
@@ -174,15 +174,15 @@ export default function OrbitalSection() {
                   </div>
 
                   {/* Content */}
-                  <div>
+                  <div style={{ paddingTop: "14px" }}>
                     <div
                       style={{
                         fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-                        fontSize: "9px",
+                        fontSize: "11px",
                         textTransform: "uppercase",
-                        letterSpacing: "0.12em",
+                        letterSpacing: "0.14em",
                         color: "var(--pc-accent-bright)",
-                        marginBottom: "5px",
+                        marginBottom: "10px",
                       }}
                     >
                       {l.tag}
@@ -191,9 +191,9 @@ export default function OrbitalSection() {
                       style={{
                         color: "var(--pc-text)",
                         fontWeight: 700,
-                        fontSize: "13.5px",
+                        fontSize: "17px",
                         fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
-                        marginBottom: "5px",
+                        marginBottom: "12px",
                         letterSpacing: "-0.01em",
                       }}
                     >
@@ -201,9 +201,9 @@ export default function OrbitalSection() {
                     </div>
                     <p
                       style={{
-                        fontSize: "12.5px",
+                        fontSize: "15px",
                         color: "var(--pc-text2)",
-                        lineHeight: 1.6,
+                        lineHeight: 1.65,
                         margin: 0,
                       }}
                     >
