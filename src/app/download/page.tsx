@@ -50,7 +50,7 @@ export default function DownloadPage() {
       <Navbar />
       <main style={{ paddingTop: "80px" }}>
         {/* Hero */}
-        <section style={{ padding: "100px 5% 80px", textAlign: "center" }}>
+        <section style={{ padding: "clamp(40px, 10vh, 100px) 5% clamp(40px, 8vh, 80px)", textAlign: "center" }}>
           <div style={{ maxWidth: "700px", margin: "0 auto" }}>
             <div className="reveal">
               <div className="section-label-el" style={{ justifyContent: "center" }}>
@@ -124,7 +124,7 @@ export default function DownloadPage() {
             padding: "80px 5%",
             borderTop: "1px solid var(--pc-glass-border)",
             borderBottom: "1px solid var(--pc-glass-border)",
-            background: "rgba(255,255,255,0.015)",
+            background: "var(--pc-glass)",
           }}
         >
           <div style={{ maxWidth: "720px", margin: "0 auto" }}>
@@ -301,10 +301,11 @@ function OSButton({
         background: "var(--pc-glass)",
         border: "1px solid var(--pc-glass-border)",
         borderRadius: "16px",
-        padding: "24px 40px",
+        padding: "20px 32px",
         textDecoration: "none",
         transition: "all 0.25s cubic-bezier(0.4,0,0.2,1)",
-        minWidth: "180px",
+        flex: "1",
+        maxWidth: "220px",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement;

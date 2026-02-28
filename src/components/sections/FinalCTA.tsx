@@ -4,7 +4,7 @@ export default function FinalCTA() {
   return (
     <section id="download" style={{ padding: "80px 5%" }}>
       <div
-        className="reveal"
+        className="reveal cta-box"
         style={{
           maxWidth: "900px",
           margin: "0 auto",
@@ -81,8 +81,15 @@ export default function FinalCTA() {
 
       <style jsx>{`
         @media (max-width: 900px) {
-          div[style*="padding: 80px 60px"] {
+          .cta-box {
             padding: 48px 28px !important;
+            border-radius: 20px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .cta-box {
+            padding: 36px 20px !important;
+            border-radius: 16px !important;
           }
         }
       `}</style>

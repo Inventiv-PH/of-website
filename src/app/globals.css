@@ -112,6 +112,21 @@
   --pc-glass-border: rgba(255,255,255,0.08);
   --pc-glass-border-accent: rgba(139,46,60,0.3);
   --pc-grid-size: 52px;
+  --pc-grid-line: rgba(255,255,255,0.025);
+}
+
+/* ── LIGHT MODE ── */
+html.light {
+  --pc-bg: #f0f2f5;
+  --pc-bg2: #ffffff;
+  --pc-bg3: #e4e6ea;
+  --pc-text: #0f1115;
+  --pc-text2: rgba(15,17,21,0.6);
+  --pc-text3: rgba(15,17,21,0.38);
+  --pc-glass: rgba(0,0,0,0.03);
+  --pc-glass-border: rgba(0,0,0,0.09);
+  --pc-glass-border-accent: rgba(139,46,60,0.22);
+  --pc-grid-line: rgba(0,0,0,0.055);
 }
 
 /* ── ANIMATIONS ── */
@@ -197,8 +212,8 @@
     inset: 0;
     z-index: 0;
     background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      linear-gradient(var(--pc-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--pc-grid-line) 1px, transparent 1px);
     background-size: var(--pc-grid-size) var(--pc-grid-size);
     pointer-events: none;
   }
@@ -321,4 +336,27 @@
   .animate-counter-cw-slower { animation: counter-cw 140s linear infinite; }
   .animate-fade-up { animation: fadeUp 0.7s ease both; }
   .animate-glow-pulse-slow { animation: glow-pulse 3s ease-in-out infinite; }
+}
+
+/* ── MOBILE RESPONSIVE UTILITIES ── */
+@media (max-width: 600px) {
+  .btn-neon {
+    padding: 11px 22px;
+    font-size: 13px;
+  }
+  .btn-ghost {
+    padding: 11px 18px;
+    font-size: 13px;
+  }
+  .step-label {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

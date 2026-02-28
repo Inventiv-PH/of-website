@@ -31,7 +31,7 @@ export default function HowItWorks() {
       id="how"
       style={{
         padding: "100px 5%",
-        background: "rgba(255,255,255,0.015)",
+        background: "var(--pc-glass)",
         borderTop: "1px solid var(--pc-glass-border)",
         borderBottom: "1px solid var(--pc-glass-border)",
       }}
@@ -155,9 +155,9 @@ export default function HowItWorks() {
                 {/* Content card */}
                 <div
                   style={{
-                    background: "linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    borderTop: "1px solid rgba(255,255,255,0.15)",
+                    background: "var(--pc-glass)",
+                    border: "1px solid var(--pc-glass-border)",
+                    borderTop: "1px solid var(--pc-glass-border)",
                     borderRadius: "16px",
                     padding: "24px 20px",
                     width: "100%",
@@ -178,8 +178,8 @@ export default function HowItWorks() {
                   }}
                   onMouseLeave={(e) => {
                     const el = e.currentTarget as HTMLElement;
-                    el.style.borderColor = "rgba(255,255,255,0.08)";
-                    el.style.borderTopColor = "rgba(255,255,255,0.15)";
+                    el.style.borderColor = "var(--pc-glass-border)";
+                    el.style.borderTopColor = "var(--pc-glass-border)";
                     el.style.boxShadow = "0 10px 30px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)";
                     el.style.transform = "none";
                   }}
@@ -198,7 +198,7 @@ export default function HowItWorks() {
                       fontSize: "15px",
                       fontWeight: 800,
                       marginBottom: "10px",
-                      color: "#fff",
+                      color: "var(--pc-text)",
                       fontFamily:
                         "var(--font-manrope-var), Manrope, sans-serif",
                     }}
@@ -208,7 +208,7 @@ export default function HowItWorks() {
                   <p
                     style={{
                       fontSize: "13px",
-                      color: "rgba(232,232,232,0.6)",
+                      color: "var(--pc-text2)",
                       lineHeight: 1.6,
                     }}
                   >
@@ -282,6 +282,15 @@ export default function HowItWorks() {
               var(--pc-accent) 0%,
               rgba(176, 51, 71, 0.2) 100%
             );
+          }
+        }
+        @media (min-width: 601px) and (max-width: 900px) {
+          .how-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 16px !important;
+          }
+          .timeline-wrapper::before {
+            display: none;
           }
         }
       `}</style>

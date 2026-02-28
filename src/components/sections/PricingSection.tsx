@@ -57,7 +57,7 @@ export const pricingPlans = [
 
 export default function PricingSection({ topPadding = "120px" }: { topPadding?: string }) {
   return (
-    <section id="pricing" style={{ padding: `${topPadding} 5% 120px`, color: "#fff", background: "transparent" }}>
+    <section id="pricing" style={{ padding: `${topPadding} 5% 120px`, color: "var(--pc-text)", background: "transparent" }}>
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
         <div className="reveal" style={{ textAlign: "center" }}>
           <div
@@ -68,7 +68,7 @@ export default function PricingSection({ topPadding = "120px" }: { topPadding?: 
               gap: "12px",
               fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
               fontSize: "10px",
-              color: "rgba(176,51,71,1)", // Dark red accent
+              color: "rgba(176,51,71,1)",
               textTransform: "uppercase",
               letterSpacing: "0.15em",
               marginBottom: "20px",
@@ -96,7 +96,7 @@ export default function PricingSection({ topPadding = "120px" }: { topPadding?: 
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: "24px",
             marginTop: "56px",
-            alignItems: "stretch", // Ensures cards are equal height
+            alignItems: "stretch",
           }}
         >
           {pricingPlans.map((plan, i) => (
@@ -129,13 +129,13 @@ export function PriceCard({
       style={{
         display: "flex",
         flexDirection: "column",
-        background: plan.popular ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.015)",
-        border: plan.popular ? "1px solid rgba(176,51,71,0.5)" : "1px solid rgba(255,255,255,0.05)",
+        background: "var(--pc-glass)",
+        border: plan.popular ? "1px solid rgba(176,51,71,0.5)" : "1px solid var(--pc-glass-border)",
         borderRadius: "16px",
         overflow: "hidden",
         transition: "border-color 0.2s, transform 0.2s, box-shadow 0.2s",
         boxShadow: plan.popular ? "0 12px 40px rgba(176,51,71,0.08)" : "none",
-        height: "100%", // Fill parent height in grid
+        height: "100%",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement;
@@ -144,7 +144,7 @@ export function PriceCard({
           el.style.borderColor = "rgba(176,51,71,0.8)";
           el.style.boxShadow = "0 16px 50px rgba(176,51,71,0.15)";
         } else {
-          el.style.borderColor = "rgba(255,255,255,0.1)";
+          el.style.borderColor = "var(--pc-glass-border-accent)";
         }
       }}
       onMouseLeave={(e) => {
@@ -154,7 +154,7 @@ export function PriceCard({
           el.style.borderColor = "rgba(176,51,71,0.5)";
           el.style.boxShadow = "0 12px 40px rgba(176,51,71,0.08)";
         } else {
-          el.style.borderColor = "rgba(255,255,255,0.05)";
+          el.style.borderColor = "var(--pc-glass-border)";
         }
       }}
     >
@@ -181,7 +181,7 @@ export function PriceCard({
       <div
         style={{
           padding: plan.popular ? "32px 32px 24px" : "40px 32px 24px",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
+          borderBottom: "1px solid var(--pc-glass-border)",
           flexGrow: 0,
         }}
       >
@@ -189,7 +189,7 @@ export function PriceCard({
           style={{
             fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
             fontSize: "11px",
-            color: plan.popular ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.3)",
+            color: "var(--pc-text3)",
             textTransform: "uppercase",
             letterSpacing: "0.1em",
             marginBottom: "16px",
@@ -202,7 +202,7 @@ export function PriceCard({
             fontSize: "22px",
             fontWeight: 800,
             marginBottom: "20px",
-            color: "#fff",
+            color: "var(--pc-text)",
             fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
           }}
         >
@@ -214,14 +214,14 @@ export function PriceCard({
               fontSize: "44px",
               fontWeight: 800,
               letterSpacing: "-0.04em",
-              color: "#fff",
+              color: "var(--pc-text)",
               fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
               lineHeight: 1,
             }}
           >
             {plan.price}
           </span>
-          <span style={{ fontSize: "14px", color: "rgba(255,255,255,0.5)", fontWeight: 500 }}>{plan.period}</span>
+          <span style={{ fontSize: "14px", color: "var(--pc-text2)", fontWeight: 500 }}>{plan.period}</span>
         </div>
       </div>
 
@@ -234,7 +234,7 @@ export function PriceCard({
             flexDirection: "column",
             gap: "16px",
             marginBottom: "40px",
-            flexGrow: 1, // pushes button to bottom
+            flexGrow: 1,
           }}
         >
           {plan.features.map((f) => (
@@ -242,7 +242,7 @@ export function PriceCard({
               key={f}
               style={{
                 fontSize: "14px",
-                color: "rgba(255,255,255,0.6)",
+                color: "var(--pc-text2)",
                 display: "flex",
                 gap: "12px",
                 alignItems: "flex-start",
@@ -268,17 +268,17 @@ export function PriceCard({
             textDecoration: "none",
             transition: "all 0.2s ease",
             fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
-            background: plan.ctaFill ? "rgba(176,51,71,0.8)" : "rgba(255,255,255,0.02)",
-            color: plan.ctaFill ? "#fff" : "rgba(255,255,255,0.8)",
-            border: plan.ctaFill ? "1px solid rgba(176,51,71,1)" : "1px solid rgba(255,255,255,0.04)",
+            background: plan.ctaFill ? "rgba(176,51,71,0.8)" : "var(--pc-glass)",
+            color: plan.ctaFill ? "#fff" : "var(--pc-text)",
+            border: plan.ctaFill ? "1px solid rgba(176,51,71,1)" : "1px solid var(--pc-glass-border)",
           }}
           onMouseEnter={(e) => {
             const el = e.currentTarget as HTMLElement;
             if (plan.ctaFill) {
               el.style.background = "rgba(200,60,80,0.9)";
             } else {
-              el.style.background = "rgba(255,255,255,0.05)";
-              el.style.borderColor = "rgba(255,255,255,0.1)";
+              el.style.background = "var(--pc-glass-border)";
+              el.style.borderColor = "var(--pc-glass-border-accent)";
             }
           }}
           onMouseLeave={(e) => {
@@ -286,8 +286,8 @@ export function PriceCard({
             if (plan.ctaFill) {
               el.style.background = "rgba(176,51,71,0.8)";
             } else {
-              el.style.background = "rgba(255,255,255,0.02)";
-              el.style.borderColor = "rgba(255,255,255,0.04)";
+              el.style.background = "var(--pc-glass)";
+              el.style.borderColor = "var(--pc-glass-border)";
             }
           }}
         >

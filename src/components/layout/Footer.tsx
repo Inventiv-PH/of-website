@@ -53,7 +53,7 @@ export default function Footer() {
           bottom: "-20px",
           left: "50%",
           transform: "translateX(-50%)",
-          fontSize: "15vw",
+          fontSize: "clamp(40px, 15vw, 140px)",
           fontWeight: 900,
           whiteSpace: "nowrap",
           color: "rgba(255,255,255,0.025)",
@@ -187,7 +187,14 @@ export default function Footer() {
       <style jsx>{`
         @media (max-width: 900px) {
           .footer-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 28px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .footer-grid {
             grid-template-columns: 1fr !important;
+            gap: 24px !important;
           }
         }
       `}</style>

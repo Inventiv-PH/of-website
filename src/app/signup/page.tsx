@@ -61,6 +61,7 @@ export default function SignupPage() {
                     {arr.indexOf(step) > i ? "✓" : i + 1}
                   </div>
                   <span
+                    className="step-label"
                     style={{
                       fontSize: "12px",
                       fontWeight: step === s ? 700 : 400,
@@ -109,7 +110,7 @@ function FormCard({ children }: { children: React.ReactNode }) {
         background: "var(--pc-glass)",
         border: "1px solid var(--pc-glass-border)",
         borderRadius: "20px",
-        padding: "40px",
+        padding: "clamp(24px, 5vw, 40px)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
       }}
@@ -144,7 +145,7 @@ function FormInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
       {...props}
       style={{
         width: "100%",
-        background: "rgba(255,255,255,0.04)",
+        background: "var(--pc-glass)",
         border: "1px solid var(--pc-glass-border)",
         borderRadius: "10px",
         padding: "12px 16px",
@@ -272,6 +273,8 @@ function PlanStep({ onNext }: { onNext: () => void }) {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              flexWrap: "wrap",
+              gap: "8px",
             }}
           >
             <div>

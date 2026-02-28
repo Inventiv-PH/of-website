@@ -22,8 +22,8 @@ export default function WhoSection() {
       style={{
         padding: "100px 5%",
         background: "transparent",
-        color: "#fff",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
+        color: "var(--pc-text)",
+        borderTop: "1px solid var(--pc-glass-border)",
       }}
     >
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
@@ -36,7 +36,7 @@ export default function WhoSection() {
           </div>
           <h2
             style={{
-              color: "#fff",
+              color: "var(--pc-text)",
               fontSize: "clamp(28px, 3.5vw, 44px)",
               fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
             }}
@@ -59,7 +59,7 @@ export default function WhoSection() {
               key={c.num}
               className={`reveal${i > 0 ? ` delay-${i}` : ""}`}
               style={{
-                background: "rgba(255,255,255,0.03)",
+                background: "var(--pc-glass)",
                 border: "2px solid transparent",
                 borderRadius: "16px",
                 padding: "32px 26px",
@@ -75,18 +75,18 @@ export default function WhoSection() {
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.borderColor = "transparent";
-                el.style.background = "rgba(255,255,255,0.03)";
+                el.style.background = "var(--pc-glass)";
                 el.style.transform = "translateY(0)";
                 el.style.boxShadow = "none";
               }}
             >
               <div
                 style={{
-                  fontSize: "52px",
-                  fontWeight: 900,
+                  fontSize: "clamp(32px, 10vw, 52px)",
+                  fontWeight: 800,
                   letterSpacing: "-0.05em",
                   color: "transparent",
-                  WebkitTextStroke: "2px rgba(255,255,255,0.1)",
+                  WebkitTextStroke: "2px var(--pc-glass-border)",
                   lineHeight: 1,
                   marginBottom: "16px",
                   fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
@@ -99,7 +99,7 @@ export default function WhoSection() {
                   fontSize: "18px",
                   fontWeight: 800,
                   marginBottom: "10px",
-                  color: "#fff",
+                  color: "var(--pc-text)",
                   fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
                 }}
               >
@@ -117,6 +117,11 @@ export default function WhoSection() {
         @media (max-width: 900px) {
           .who-grid {
             grid-template-columns: 1fr !important;
+          }
+        }
+        @media (min-width: 481px) and (max-width: 900px) {
+          .who-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
           }
         }
       `}</style>
