@@ -61,22 +61,7 @@ export default function CostSection() {
           {/* ── Left: Problem breakdown ── */}
           <div className="reveal">
             {/* Label */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-                fontSize: "10px",
-                color: "#ff5100",
-                textTransform: "uppercase",
-                letterSpacing: "0.15em",
-                marginBottom: "28px",
-              }}
-            >
-              <div style={{ width: "20px", height: "1px", background: "#ff5100" }} />
-              The Problem
-            </div>
+            <div className="section-label-el">The Problem</div>
 
             <h2
               style={{
@@ -100,12 +85,12 @@ export default function CostSection() {
                   <span
                     style={{
                       fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-                      fontSize: "34px",
+                      fontSize: "56px",
                       fontWeight: 800,
-                      color: "rgba(255,81,0,0.16)",
+                      color: "rgba(139, 46, 60, 0.45)",
                       lineHeight: 1,
                       flexShrink: 0,
-                      width: "44px",
+                      width: "72px",
                       textAlign: "right",
                       letterSpacing: "-0.04em",
                       userSelect: "none",
@@ -116,9 +101,9 @@ export default function CostSection() {
                   {/* Content with left accent */}
                   <div
                     style={{
-                      borderLeft: "2px solid rgba(255,81,0,0.18)",
+                      borderLeft: "2px solid rgba(139, 46, 60, 0.4)",
                       paddingLeft: "20px",
-                      paddingTop: "2px",
+                      paddingTop: "6px",
                     }}
                   >
                     <div

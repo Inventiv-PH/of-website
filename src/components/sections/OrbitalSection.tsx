@@ -151,8 +151,8 @@ export default function OrbitalSection() {
                   {/* Numbered dot */}
                   <div
                     style={{
-                      width: "24px",
-                      height: "24px",
+                      width: "44px",
+                      height: "44px",
                       borderRadius: "50%",
                       background: i === 0
                         ? "rgba(139,46,60,0.35)"
@@ -165,7 +165,7 @@ export default function OrbitalSection() {
                       position: "relative",
                       zIndex: 1,
                       fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-                      fontSize: "9px",
+                      fontSize: "14px",
                       fontWeight: 700,
                       color: i === 0 ? "#C96070" : "var(--pc-text3)",
                     }}
