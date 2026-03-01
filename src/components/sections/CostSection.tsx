@@ -85,14 +85,14 @@ export default function CostSection() {
                   <span
                     style={{
                       fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-                      fontSize: "56px",
+                      fontSize: "36px",
                       fontWeight: 800,
-                      color: "rgba(139, 46, 60, 0.45)",
+                      color: "var(--pc-accent-bright)",
                       lineHeight: 1,
                       flexShrink: 0,
-                      width: "72px",
+                      width: "52px",
                       textAlign: "right",
-                      letterSpacing: "-0.04em",
+                      letterSpacing: "-0.02em",
                       userSelect: "none",
                     }}
                   >
@@ -109,8 +109,8 @@ export default function CostSection() {
                     <div
                       style={{
                         color: "var(--pc-text)",
-                        fontWeight: 700,
-                        fontSize: "14px",
+                        fontWeight: 800,
+                        fontSize: "16px",
                         marginBottom: "5px",
                         fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
                         letterSpacing: "-0.01em",
@@ -150,11 +150,11 @@ export default function CostSection() {
           <div className="reveal delay-1">
             <div
               style={{
-                background: "rgba(10,11,14,0.95)",
-                border: "1px solid rgba(139,46,60,0.25)",
+                background: "var(--pc-card-bg)",
+                border: "1px solid var(--pc-card-border-accent)",
                 borderRadius: "16px",
                 overflow: "hidden",
-                boxShadow: "0 16px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,46,60,0.08)",
+                boxShadow: "0 16px 60px var(--pc-shadow-heavy), 0 0 0 1px rgba(139,46,60,0.08)",
               }}
             >
               {/* Panel header */}
@@ -199,8 +199,8 @@ export default function CostSection() {
                       style={{
                         fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
                         fontSize: "13px",
-                        fontWeight: 700,
-                        color: "var(--pc-text2)",
+                        fontWeight: 800,
+                        color: "var(--pc-text)",
                         textTransform: "uppercase",
                         letterSpacing: "0.14em",
                         marginBottom: "14px",
@@ -229,7 +229,7 @@ export default function CostSection() {
                         style={{
                           flex: 1,
                           height: "18px",
-                          background: "rgba(255,255,255,0.04)",
+                          background: "var(--pc-bar-track)",
                           borderRadius: "5px",
                           overflow: "hidden",
                         }}
@@ -299,7 +299,7 @@ export default function CostSection() {
                         <div
                           style={{
                             height: "18px",
-                            background: "rgba(255,255,255,0.04)",
+                            background: "var(--pc-bar-track)",
                             borderRadius: "5px",
                             overflow: "hidden",
                           }}
@@ -351,7 +351,7 @@ export default function CostSection() {
                       </div>
                     </div>
                     {/* Reduction pill */}
-                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
+                    <div style={{ display: "flex", justifyContent: "flex-start", paddingLeft: "58px", marginTop: "10px" }}>
                       <span
                         style={{
                           fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",

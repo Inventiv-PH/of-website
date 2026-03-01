@@ -1,42 +1,44 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import AnimatedLines from "@/components/ui/AnimatedLines";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 const SEGMENTS = [
-  { text: "Complete Promo Deals", gradient: false },
-  { text: "Faster with", gradient: false },
-  { text: "Automated Subscriber", gradient: true },
+  { text: "Complete Promo Deals ", gradient: false },
+  { text: "Faster with ", gradient: false },
+  { text: "Automated Subscriber ", gradient: true },
   { text: "Accounts", gradient: true },
-] as const;
-
-const FULL = SEGMENTS.map(s => s.text).join("");
-// cumulative end positions per segment
-const CUM = SEGMENTS.reduce<number[]>((acc, s) => {
-  const prev = acc.length ? acc[acc.length - 1] : 0;
-  return [...acc, prev + s.text.length];
-}, []);
+];
 
 const SUBLINE = "Automated accounts that subscribe, tip, message, and engage to help you hit required numbers faster without sacrificing real fans.";
 
 export default function Hero() {
-  const [hCount, setHCount] = useState(0);
-  const [showBelow, setShowBelow] = useState(false);
+  const container = useRef<HTMLDivElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const sublineRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
 
-  const headlineDone = hCount >= FULL.length;
+  useGSAP(() => {
+    const tl = gsap.timeline({ delay: 0.2 });
 
-  useEffect(() => {
-    if (!headlineDone) {
-      const t = setTimeout(() => setHCount(c => c + 1), 28);
-      return () => clearTimeout(t);
-    }
-    const t = setTimeout(() => setShowBelow(true), 280);
-    return () => clearTimeout(t);
-  }, [hCount, headlineDone]);
+    // Fade in CTAs from the bottom
+    tl.from([ctaRef.current, textRef.current], {
+      y: 20,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: "power2.out",
+    }, "-=0.4");
+  }, { scope: container });
 
   return (
-    <div style={{ position: "relative", overflow: "hidden" }}>
+    <div ref={container} style={{ position: "relative", overflow: "hidden" }}>
       {/* ── Fiber bundle background ── */}
       <div
         style={{
@@ -78,6 +80,7 @@ export default function Hero() {
           style={{ padding: "clamp(20px, 5vw, 40px) clamp(20px, 4vw, 40px) clamp(20px, 5vw, 40px) max(24px, 7vw)" }}
         >
           <h1
+            ref={headlineRef}
             style={{
               fontSize: "clamp(24px, 3.4vw, 50px)",
               fontWeight: 800,
@@ -85,42 +88,27 @@ export default function Hero() {
               letterSpacing: "-0.03em",
               fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
               marginBottom: "20px",
+              filter: "var(--pc-shadow-drop-filter)",
             }}
           >
             {SEGMENTS.map((seg, idx) => {
-              const segStart = idx === 0 ? 0 : CUM[idx - 1];
-              const charsHere = Math.max(0, Math.min(hCount - segStart, seg.text.length));
-              const visible = seg.text.slice(0, charsHere);
-              const isActive = hCount > segStart && hCount <= CUM[idx];
-
-              if (charsHere === 0 && !isActive) return null;
-
               const gradStyle: React.CSSProperties = seg.gradient ? {
-                background: "linear-gradient(90deg, #C96070 0%, #b03347 45%, rgba(232,232,232,0.25) 100%)",
+                background: "linear-gradient(90deg, #C96070 0%, #b03347 45%, var(--pc-text) 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               } : { color: "var(--pc-text)" };
 
               return (
-                <span key={idx} style={{ display: "block", ...gradStyle }}>
-                  {visible}
-                  {isActive && !headlineDone && (
-                    <span
-                      className="animate-blink"
-                      style={{
-                        WebkitTextFillColor: seg.gradient ? "#C96070" : "var(--pc-accent-bright)",
-                        color: "var(--pc-accent-bright)",
-                        fontWeight: 300,
-                      }}
-                    >|</span>
-                  )}
+                <span key={idx} className="hero-headline-segment" style={{ display: "inline-block", ...gradStyle }}>
+                  {seg.text}
                 </span>
               );
             })}
           </h1>
 
           <p
+            ref={sublineRef}
             style={{
               fontSize: "clamp(14px, 1.4vw, 17px)",
               color: "var(--pc-text2)",
@@ -128,21 +116,17 @@ export default function Hero() {
               fontWeight: 400,
               lineHeight: 1.7,
               marginBottom: "36px",
-              opacity: showBelow ? 1 : 0,
-              transform: showBelow ? "none" : "translateY(10px)",
-              transition: "opacity 0.5s ease, transform 0.5s ease",
+              textShadow: "var(--pc-shadow-text)",
             }}
           >
             {SUBLINE}
           </p>
 
           <div
+            ref={ctaRef}
             className="hero-cta"
             style={{
               display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap",
-              opacity: showBelow ? 1 : 0,
-              transform: showBelow ? "none" : "translateY(10px)",
-              transition: "opacity 0.5s ease 0.15s, transform 0.5s ease 0.15s",
             }}
           >
             <Link href="/download" className="btn-neon">
@@ -153,14 +137,13 @@ export default function Hero() {
             </Link>
           </div>
           <p
+            ref={textRef}
             style={{
               marginTop: "14px",
               fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
               fontSize: "11px",
               color: "var(--pc-text3)",
               letterSpacing: "0.05em",
-              opacity: showBelow ? 1 : 0,
-              transition: "opacity 0.5s ease 0.3s",
             }}
           >
             Download is free. Payment required to activate features.
@@ -254,10 +237,10 @@ export default function Hero() {
                       position: "absolute",
                       top,
                       left,
-                      background: "rgba(10,11,14,0.88)",
+                      background: "var(--pc-card-bg)",
                       backdropFilter: "blur(20px)",
                       WebkitBackdropFilter: "blur(20px)",
-                      border: "1px solid rgba(139,46,60,0.6)",
+                      border: "1px solid var(--pc-glass-border-accent)",
                       borderRadius: "100px",
                       padding: s.pad,
                       display: "flex",
@@ -273,12 +256,12 @@ export default function Hero() {
                         width: s.iconBox,
                         height: s.iconBox,
                         borderRadius: "50%",
-                        background: "rgba(139,46,60,0.28)",
-                        border: "1px solid rgba(176,51,71,0.6)",
+                        background: "var(--pc-accent-glow)",
+                        border: "1px solid var(--pc-glass-border-accent)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        color: "#C96070",
+                        color: "var(--pc-accent-bright)",
                         flexShrink: 0,
                       }}
                     >
@@ -307,7 +290,7 @@ export default function Hero() {
         @media (max-width: 900px) {
           .hero-section {
             grid-template-columns: 1fr !important;
-            padding-top: 100px !important;
+            padding: 140px 0 100px !important;
             min-height: auto !important;
           }
           .hero-left {
@@ -318,23 +301,7 @@ export default function Hero() {
             justify-content: center;
           }
           .hero-right {
-            height: 280px !important;
-            justify-content: center !important;
-          }
-          .hero-img-wrapper {
-            width: 90% !important;
-            right: 0 !important;
-          }
-          .feature-badges {
             display: none !important;
-          }
-        }
-        @media (max-width: 480px) {
-          .hero-right {
-            height: 200px !important;
-          }
-          .hero-img-wrapper {
-            width: 100% !important;
           }
         }
       `}</style>

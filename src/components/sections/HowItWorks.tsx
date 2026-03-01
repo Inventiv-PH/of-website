@@ -30,13 +30,17 @@ export default function HowItWorks() {
     <section
       id="how"
       style={{
-        padding: "100px 5%",
+        padding: "clamp(60px, 10vh, 100px) 5%",
         background: "var(--pc-glass)",
         borderTop: "1px solid var(--pc-glass-border)",
         borderBottom: "1px solid var(--pc-glass-border)",
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
       }}
     >
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
         {/* Header */}
         <div className="reveal" style={{ textAlign: "center", marginBottom: "72px" }}>
           <div className="section-label-el" style={{ justifyContent: "center" }}>
@@ -131,7 +135,7 @@ export default function HowItWorks() {
                     fontSize: "15px",
                     fontWeight: 800,
                     boxShadow:
-                      "0 0 0 4px var(--pc-bg3, #151820), 0 0 0 6px rgba(139,46,60,0.5), 0 0 30px var(--pc-accent-glow-strong), inset 0 2px 4px rgba(255,255,255,0.4)",
+                      "0 0 0 4px var(--pc-bg), 0 0 0 6px rgba(139,46,60,0.5), 0 0 30px var(--pc-accent-glow-strong), inset 0 2px 4px rgba(255,255,255,0.4)",
                     flexShrink: 0,
                     zIndex: 2,
                     position: "relative",
@@ -163,7 +167,7 @@ export default function HowItWorks() {
                     width: "100%",
                     backdropFilter: "blur(20px)",
                     WebkitBackdropFilter: "blur(20px)",
-                    boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
+                    boxShadow: "0 10px 30px -10px var(--pc-shadow-heavy), inset 0 1px 0 var(--pc-card-inset)",
                     transition:
                       "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                     position: "relative",
@@ -173,14 +177,14 @@ export default function HowItWorks() {
                     const el = e.currentTarget as HTMLElement;
                     el.style.borderColor = "var(--pc-glass-border-accent)";
                     el.style.borderTopColor = "var(--pc-accent-bright)";
-                    el.style.boxShadow = "0 20px 40px -10px rgba(0,0,0,0.7), 0 0 40px rgba(139,46,60,0.15), inset 0 1px 0 rgba(255,255,255,0.1)";
+                    el.style.boxShadow = "0 20px 40px -10px var(--pc-shadow-heavy), 0 0 40px rgba(139,46,60,0.15), inset 0 1px 0 var(--pc-card-inset)";
                     el.style.transform = "translateY(-6px) scale(1.02)";
                   }}
                   onMouseLeave={(e) => {
                     const el = e.currentTarget as HTMLElement;
                     el.style.borderColor = "var(--pc-glass-border)";
                     el.style.borderTopColor = "var(--pc-glass-border)";
-                    el.style.boxShadow = "0 10px 30px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)";
+                    el.style.boxShadow = "0 10px 30px -10px var(--pc-shadow-heavy), inset 0 1px 0 var(--pc-card-inset)";
                     el.style.transform = "none";
                   }}
                 >
@@ -190,7 +194,7 @@ export default function HowItWorks() {
                     left: 0,
                     right: 0,
                     height: "1px",
-                    background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                    background: "linear-gradient(90deg, transparent, var(--pc-card-inset), transparent)",
                     opacity: 0.5,
                   }} />
                   <h3
@@ -261,7 +265,7 @@ export default function HowItWorks() {
         @media (max-width: 900px) {
           .how-grid {
             grid-template-columns: 1fr !important;
-            gap: 0 !important;
+            gap: 24px !important;
           }
           .track-line {
             display: none;
@@ -269,28 +273,11 @@ export default function HowItWorks() {
           .step-arrow {
             display: none !important;
           }
-          /* Vertical track for mobile */
-          .timeline-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 27px;
-            width: 2px;
-            background: linear-gradient(
-              180deg,
-              var(--pc-accent) 0%,
-              rgba(176, 51, 71, 0.2) 100%
-            );
-          }
         }
         @media (min-width: 601px) and (max-width: 900px) {
           .how-grid {
             grid-template-columns: repeat(2, 1fr) !important;
-            gap: 16px !important;
-          }
-          .timeline-wrapper::before {
-            display: none;
+            gap: 24px !important;
           }
         }
       `}</style>

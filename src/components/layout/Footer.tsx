@@ -56,7 +56,7 @@ export default function Footer() {
           fontSize: "clamp(40px, 15vw, 140px)",
           fontWeight: 900,
           whiteSpace: "nowrap",
-          color: "rgba(255,255,255,0.025)",
+          color: "var(--pc-watermark)",
           letterSpacing: "-0.05em",
           pointerEvents: "none",
           lineHeight: 1,

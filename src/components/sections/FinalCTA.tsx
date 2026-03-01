@@ -38,8 +38,8 @@ export default function FinalCTA() {
           </div>
           <h2
             style={{
-              fontSize: "clamp(32px, 5vw, 60px)",
-              marginBottom: "32px",
+              fontSize: "clamp(24px, 5vw, 60px)",
+              marginBottom: "24px",
               fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
             }}
           >
@@ -58,7 +58,7 @@ export default function FinalCTA() {
           >
             <Link
               href="/download"
-              className="btn-neon"
+              className="btn-neon cta-btn"
               style={{ fontSize: "16px", padding: "18px 44px" }}
             >
               ↓ Download Now
@@ -90,6 +90,15 @@ export default function FinalCTA() {
           .cta-box {
             padding: 36px 20px !important;
             border-radius: 16px !important;
+          }
+          .cta-box .section-label-el {
+            font-size: 13px !important;
+            gap: 12px !important;
+            margin-bottom: 12px !important;
+          }
+          .cta-btn {
+            font-size: 13px !important;
+            padding: 12px 28px !important;
           }
         }
       `}</style>

@@ -57,7 +57,7 @@ export default function WhoSection() {
           {cards.map((c, i) => (
             <div
               key={c.num}
-              className={`reveal${i > 0 ? ` delay-${i}` : ""}`}
+              className={`who-card reveal${i > 0 ? ` delay-${i}` : ""}`}
               style={{
                 background: "var(--pc-glass)",
                 border: "2px solid transparent",
@@ -65,31 +65,19 @@ export default function WhoSection() {
                 padding: "32px 26px",
                 transition: "border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s",
               }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = "var(--pc-accent)";
-                el.style.background = "rgba(139,46,60,0.05)";
-                el.style.transform = "translateY(-4px)";
-                el.style.boxShadow = "0 12px 40px rgba(139,46,60,0.1)";
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = "transparent";
-                el.style.background = "var(--pc-glass)";
-                el.style.transform = "translateY(0)";
-                el.style.boxShadow = "none";
-              }}
             >
               <div
+                className="who-num"
                 style={{
                   fontSize: "clamp(32px, 10vw, 52px)",
                   fontWeight: 800,
                   letterSpacing: "-0.05em",
                   color: "transparent",
-                  WebkitTextStroke: "2px var(--pc-glass-border)",
+                  WebkitTextStroke: "2px var(--pc-stroke-outline)",
                   lineHeight: 1,
                   marginBottom: "16px",
                   fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
+                  transition: "all 0.3s ease",
                 }}
               >
                 {c.num}
@@ -114,6 +102,17 @@ export default function WhoSection() {
       </div>
 
       <style jsx>{`
+        .who-card:hover {
+          border-color: var(--pc-accent) !important;
+          background: rgba(139,46,60,0.05) !important;
+          transform: translateY(-4px) !important;
+          box-shadow: 0 12px 40px rgba(139,46,60,0.1) !important;
+        }
+        .who-card:hover .who-num {
+          -webkit-text-stroke: 2px var(--pc-accent) !important;
+          color: rgba(139, 46, 60, 0.15) !important;
+        }
+
         @media (max-width: 900px) {
           .who-grid {
             grid-template-columns: 1fr !important;

@@ -34,12 +34,13 @@ function MoonIcon() {
 }
 
 export default function Navbar() {
-  const [isLight, setIsLight] = useState(false);
+  const [isLight, setIsLight] = useState(() => {
+    if (typeof document !== "undefined") {
+      return document.documentElement.classList.contains("light");
+    }
+    return false;
+  });
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    setIsLight(document.documentElement.classList.contains("light"));
-  }, []);
 
   useEffect(() => {
     const onResize = () => { if (window.innerWidth > 900) setMenuOpen(false); };
@@ -93,7 +94,7 @@ export default function Navbar() {
               display: "flex",
               alignItems: "center",
               gap: "clamp(12px, 2vw, 32px)",
-              background: "rgba(255,255,255,0.03)",
+              background: "var(--pc-nav-capsule)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
               border: "1px solid var(--pc-glass-border)",
@@ -217,7 +218,7 @@ export default function Navbar() {
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               style={{
                 display: "none",
-                background: menuOpen ? "var(--pc-accent)" : "rgba(255,255,255,0.03)",
+                background: menuOpen ? "var(--pc-accent)" : "var(--pc-nav-capsule)",
                 border: "1px solid var(--pc-glass-border)",
                 borderRadius: "50%",
                 width: "40px",

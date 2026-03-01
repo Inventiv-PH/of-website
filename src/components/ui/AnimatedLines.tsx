@@ -96,6 +96,7 @@ export default function AnimatedLines() {
     return (
         <canvas
             ref={canvasRef}
+            className="animated-lines-canvas"
             style={{
                 position: "absolute",
                 top: 0,

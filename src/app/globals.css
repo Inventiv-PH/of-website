@@ -113,6 +113,70 @@
   --pc-glass-border-accent: rgba(139, 46, 60, 0.3);
   --pc-grid-size: 52px;
   --pc-grid-line: rgba(255, 255, 255, 0.025);
+
+  /* Card / panel surfaces */
+  --pc-card-bg: rgba(10, 11, 14, 0.95);
+  --pc-card-bg-alt: rgba(18, 18, 24, 0.5);
+  --pc-card-bg-popular: linear-gradient(145deg, rgba(176,51,71,0.2) 0%, rgba(20,15,20,0.8) 100%);
+  --pc-card-border: rgba(255, 255, 255, 0.05);
+  --pc-card-border-accent: rgba(139, 46, 60, 0.25);
+  --pc-card-inset: rgba(255, 255, 255, 0.05);
+
+  /* Notification / floating elements */
+  --pc-notif-bg: rgba(24, 24, 28, 0.85);
+  --pc-notif-border: rgba(255, 255, 255, 0.1);
+  --pc-notif-text: #fff;
+  --pc-notif-text2: rgba(255, 255, 255, 0.8);
+  --pc-notif-text3: rgba(255, 255, 255, 0.5);
+  --pc-notif-text4: rgba(255, 255, 255, 0.6);
+  --pc-notif-text5: rgba(255, 255, 255, 0.4);
+
+  /* Shadows */
+  --pc-shadow-heavy: rgba(0, 0, 0, 0.6);
+  --pc-shadow-medium: rgba(0, 0, 0, 0.4);
+  --pc-shadow-light: rgba(0, 0, 0, 0.2);
+  --pc-shadow-drop: rgba(0, 0, 0, 1);
+  --pc-shadow-text: 0 1px 4px rgba(0, 0, 0, 1);
+  --pc-shadow-drop-filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 1));
+
+  /* SVG / chart fills */
+  --pc-svg-hole: #0d0c0e;
+  --pc-svg-hub: #121113;
+  --pc-svg-icon-bg: rgba(255, 255, 255, 0.05);
+  --pc-svg-icon-border: rgba(255, 255, 255, 0.2);
+
+  /* Bar chart track */
+  --pc-bar-track: rgba(255, 255, 255, 0.04);
+
+  /* Watermark */
+  --pc-watermark: rgba(255, 255, 255, 0.025);
+
+  /* WhoSection number stroke */
+  --pc-stroke-outline: rgba(255, 255, 255, 0.3);
+
+  /* Check icon */
+  --pc-check-bg: rgba(255, 255, 255, 0.05);
+  --pc-check-border: rgba(255, 255, 255, 0.1);
+  --pc-check-stroke: rgba(255, 255, 255, 0.7);
+
+  /* Feature text colors */
+  --pc-feature-text: rgba(255, 255, 255, 0.6);
+  --pc-period-text: rgba(255, 255, 255, 0.4);
+  --pc-desc-text: rgba(255, 255, 255, 0.7);
+
+  /* Card text overlay */
+  --pc-card-text-bg: rgba(0, 0, 0, 0.2);
+  --pc-card-text-border: rgba(255, 255, 255, 0.05);
+
+  /* Navbar capsule */
+  --pc-nav-capsule: rgba(255, 255, 255, 0.03);
+
+  /* Badge discount */
+  --pc-badge-discount-bg: rgba(255, 255, 255, 0.1);
+  --pc-badge-discount-text: rgba(255, 255, 255, 0.5);
+
+  /* AnimatedLines opacity */
+  --pc-lines-opacity: 1;
 }
 
 /* ── LIGHT MODE ── */
@@ -127,6 +191,70 @@ html.light {
   --pc-glass-border: rgba(0, 0, 0, 0.09);
   --pc-glass-border-accent: rgba(139, 46, 60, 0.22);
   --pc-grid-line: rgba(0, 0, 0, 0.055);
+
+  /* Card / panel surfaces */
+  --pc-card-bg: rgba(255, 255, 255, 0.95);
+  --pc-card-bg-alt: rgba(255, 255, 255, 0.7);
+  --pc-card-bg-popular: linear-gradient(145deg, rgba(176,51,71,0.1) 0%, rgba(255,255,255,0.9) 100%);
+  --pc-card-border: rgba(0, 0, 0, 0.08);
+  --pc-card-border-accent: rgba(139, 46, 60, 0.2);
+  --pc-card-inset: rgba(0, 0, 0, 0.03);
+
+  /* Notification / floating elements */
+  --pc-notif-bg: rgba(255, 255, 255, 0.92);
+  --pc-notif-border: rgba(0, 0, 0, 0.1);
+  --pc-notif-text: #1a1a1a;
+  --pc-notif-text2: rgba(15, 17, 21, 0.8);
+  --pc-notif-text3: rgba(15, 17, 21, 0.5);
+  --pc-notif-text4: rgba(15, 17, 21, 0.6);
+  --pc-notif-text5: rgba(15, 17, 21, 0.4);
+
+  /* Shadows */
+  --pc-shadow-heavy: rgba(0, 0, 0, 0.12);
+  --pc-shadow-medium: rgba(0, 0, 0, 0.08);
+  --pc-shadow-light: rgba(0, 0, 0, 0.06);
+  --pc-shadow-drop: rgba(0, 0, 0, 0.15);
+  --pc-shadow-text: none;
+  --pc-shadow-drop-filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.15));
+
+  /* SVG / chart fills */
+  --pc-svg-hole: #f0f2f5;
+  --pc-svg-hub: #e8e8ea;
+  --pc-svg-icon-bg: rgba(0, 0, 0, 0.04);
+  --pc-svg-icon-border: rgba(0, 0, 0, 0.12);
+
+  /* Bar chart track */
+  --pc-bar-track: rgba(0, 0, 0, 0.06);
+
+  /* Watermark */
+  --pc-watermark: rgba(0, 0, 0, 0.035);
+
+  /* WhoSection number stroke */
+  --pc-stroke-outline: rgba(0, 0, 0, 0.15);
+
+  /* Check icon */
+  --pc-check-bg: rgba(0, 0, 0, 0.04);
+  --pc-check-border: rgba(0, 0, 0, 0.1);
+  --pc-check-stroke: rgba(15, 17, 21, 0.7);
+
+  /* Feature text colors */
+  --pc-feature-text: rgba(15, 17, 21, 0.6);
+  --pc-period-text: rgba(15, 17, 21, 0.4);
+  --pc-desc-text: rgba(15, 17, 21, 0.7);
+
+  /* Card text overlay */
+  --pc-card-text-bg: rgba(255, 255, 255, 0.5);
+  --pc-card-text-border: rgba(0, 0, 0, 0.06);
+
+  /* Navbar capsule */
+  --pc-nav-capsule: rgba(255, 255, 255, 0.7);
+
+  /* Badge discount */
+  --pc-badge-discount-bg: rgba(0, 0, 0, 0.06);
+  --pc-badge-discount-text: rgba(15, 17, 21, 0.5);
+
+  /* AnimatedLines opacity */
+  --pc-lines-opacity: 0.3;
 }
 
 /* ── ANIMATIONS ── */
@@ -355,13 +483,13 @@ html.light {
 
   0%,
   100% {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(139, 46, 60, 0.1);
+    box-shadow: 0 8px 32px var(--pc-shadow-heavy), 0 0 0 1px rgba(139, 46, 60, 0.1);
     border-color: rgba(139, 46, 60, 0.3);
   }
 
   50% {
     box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.5),
+      0 8px 32px var(--pc-shadow-medium),
       0 0 0 1px rgba(230, 70, 95, 0.6),
       0 0 12px rgba(230, 70, 95, 0.5),
       0 0 24px rgba(139, 46, 60, 0.4);
@@ -539,7 +667,7 @@ html.light {
   }
 
   .btn-ghost:hover {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--pc-glass-border-accent);
     background: var(--pc-glass);
   }
 
@@ -631,6 +759,16 @@ html.light {
   .step-label {
     display: none !important;
   }
+}
+
+/* ── ANIMATED LINES (light mode fade) ── */
+.animated-lines-canvas {
+  transition: opacity 0.4s ease;
+  mix-blend-mode: screen;
+}
+html.light .animated-lines-canvas {
+  opacity: 0.25;
+  mix-blend-mode: multiply;
 }
 
 /* ── DASHBOARD BAR ANIMATIONS ── */

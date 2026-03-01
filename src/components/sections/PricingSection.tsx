@@ -1,23 +1,29 @@
 import Link from "next/link";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export const pricingPlans = [
   {
-    popular: true,
-    type: "SUBSCRIPTION",
-    name: "Monthly Access",
-    price: "$149",
-    period: "/ month",
+    popular: false,
+    type: "ONE-TIME",
+    name: "Engagement Pack",
+    price: "$49",
+    period: "per pack",
+    description: "For targeted boosts",
     features: [
-      "Full subscriber bot access",
-      "Engagement automation included",
-      "Unlimited campaigns",
-      "Priority account pool",
-      "Delivery speed controls",
-      "Cancel anytime",
+      "Likes, comments, and views",
+      "Distributed over natural timeframes",
+      "Tip and message simulation",
+      "Works standalone or with subs",
+      "No subscription required",
     ],
-    ctaLabel: "Get Started",
+    ctaLabel: "Buy Pack",
     ctaHref: "/signup",
-    ctaFill: true,
+    ctaFill: false,
   },
   {
     popular: false,
@@ -25,6 +31,7 @@ export const pricingPlans = [
     name: "Subscriber Pack",
     price: "$79",
     period: "per pack",
+    description: "For rapid scaling",
     features: [
       "500 automated subscriber accounts",
       "Paced delivery over 3–7 days",
@@ -37,28 +44,44 @@ export const pricingPlans = [
     ctaFill: false,
   },
   {
-    popular: false,
-    type: "ONE-TIME",
-    name: "Engagement Pack",
-    price: "$49",
-    period: "per pack",
+    popular: true,
+    type: "SUBSCRIPTION",
+    name: "Monthly Access",
+    price: "$149",
+    period: "/ month",
+    description: "For consistent growth",
     features: [
-      "Likes, comments, and views",
-      "Distributed over natural timeframes",
-      "Tip and message simulation",
-      "Works standalone or with subs",
-      "No subscription required",
+      "Full subscriber bot access",
+      "Engagement automation included",
+      "Unlimited campaigns",
+      "Priority account pool",
+      "Delivery speed controls",
+      "Cancel anytime",
     ],
-    ctaLabel: "Buy Pack",
+    ctaLabel: "Get Started",
     ctaHref: "/signup",
-    ctaFill: false,
+    ctaFill: true,
   },
 ];
 
-export default function PricingSection({ topPadding = "120px" }: { topPadding?: string }) {
+export default function PricingSection({ topPadding = "100px" }: { topPadding?: string }) {
+  const container = useRef<HTMLElement>(null);
+
   return (
-    <section id="pricing" style={{ padding: `${topPadding} 5% 120px`, color: "var(--pc-text)", background: "transparent" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <section
+      id="pricing"
+      ref={container}
+      style={{
+        padding: `${topPadding} 5%`,
+        color: "var(--pc-text)",
+        background: "transparent",
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
+    >
+      <div style={{ maxWidth: "1000px", margin: "0 auto", width: "100%" }}>
         <div className="reveal" style={{ textAlign: "center" }}>
           <div
             style={{
@@ -83,10 +106,14 @@ export default function PricingSection({ topPadding = "120px" }: { topPadding?: 
               fontSize: "clamp(32px, 4vw, 48px)",
               fontWeight: 800,
               fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
+              marginBottom: "16px"
             }}
           >
-            Simple, Operator-Friendly Plans
+            Try It Out First, Then Choose a Strategy.
           </h2>
+          <p style={{ color: "var(--pc-text2)", fontSize: "15px", marginBottom: "48px" }}>
+            Simple plans, simple prices. Only pay for what you really need. Change or cancel your plan at anytime.
+          </p>
         </div>
 
         <div
@@ -95,12 +122,11 @@ export default function PricingSection({ topPadding = "120px" }: { topPadding?: 
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: "24px",
-            marginTop: "56px",
             alignItems: "stretch",
           }}
         >
-          {pricingPlans.map((plan, i) => (
-            <PriceCard key={plan.name} plan={plan} delay={i} />
+          {pricingPlans.map((plan) => (
+            <PriceCard key={plan.name} plan={plan} />
           ))}
         </div>
       </div>
@@ -116,103 +142,103 @@ export default function PricingSection({ topPadding = "120px" }: { topPadding?: 
   );
 }
 
+const CubeIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+  </svg>
+);
+
+const CheckIcon = () => (
+  <div style={{ width: "16px", height: "16px", borderRadius: "50%", background: "var(--pc-check-bg)", border: "1px solid var(--pc-check-border)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--pc-check-stroke)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+  </div>
+);
+
 export function PriceCard({
   plan,
-  delay,
 }: {
   plan: (typeof pricingPlans)[0];
-  delay: number;
 }) {
   return (
     <div
-      className={`reveal${delay > 0 ? ` delay-${delay}` : ""}`}
+      className="price-card-gsap"
       style={{
+        position: "relative",
         display: "flex",
         flexDirection: "column",
-        background: "var(--pc-glass)",
-        border: plan.popular ? "1px solid rgba(176,51,71,0.5)" : "1px solid var(--pc-glass-border)",
-        borderRadius: "16px",
+        background: plan.popular ? "var(--pc-card-bg-popular)" : "var(--pc-card-bg-alt)",
+        border: plan.popular ? "1px solid rgba(176,51,71, 0.3)" : "1px solid var(--pc-card-border)",
+        borderRadius: "20px",
         overflow: "hidden",
-        transition: "border-color 0.2s, transform 0.2s, box-shadow 0.2s",
-        boxShadow: plan.popular ? "0 12px 40px rgba(176,51,71,0.08)" : "none",
+        transition: "border-color 0.3s, transform 0.3s, box-shadow 0.3s",
+        boxShadow: plan.popular ? "0 20px 40px var(--pc-shadow-medium), inset 0 1px 1px var(--pc-card-inset)" : "0 8px 32px var(--pc-shadow-light)",
         height: "100%",
+        padding: "32px 24px",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement;
-        el.style.transform = "translateY(-4px)";
+        el.style.transform = "scale(1.03)";
         if (plan.popular) {
-          el.style.borderColor = "rgba(176,51,71,0.8)";
-          el.style.boxShadow = "0 16px 50px rgba(176,51,71,0.15)";
+          el.style.borderColor = "rgba(176,51,71, 0.6)";
+          el.style.boxShadow = "0 24px 50px rgba(176,51,71, 0.15), inset 0 1px 1px rgba(255,255,255,0.1)";
         } else {
           el.style.borderColor = "var(--pc-glass-border-accent)";
         }
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement;
-        el.style.transform = "none";
+        el.style.transform = "scale(1)";
         if (plan.popular) {
-          el.style.borderColor = "rgba(176,51,71,0.5)";
-          el.style.boxShadow = "0 12px 40px rgba(176,51,71,0.08)";
+          el.style.borderColor = "rgba(176,51,71, 0.3)";
+          el.style.boxShadow = `0 20px 40px var(--pc-shadow-medium), inset 0 1px 1px var(--pc-card-inset)`;
         } else {
-          el.style.borderColor = "var(--pc-glass-border)";
+          el.style.borderColor = "var(--pc-card-border)";
         }
       }}
     >
       {plan.popular && (
-        <div
-          style={{
-            background: "rgba(176,51,71,0.8)",
-            color: "#fff",
-            textShadow: "0 1px 2px rgba(0,0,0,0.5)",
-            textAlign: "center",
-            padding: "8px",
-            fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-            fontSize: "10px",
-            fontWeight: 600,
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-          }}
-        >
-          {'// MOST POPULAR'}
-        </div>
+        <div style={{ position: "absolute", top: 0, right: 0, width: "180px", height: "180px", background: "radial-gradient(circle at top right, rgba(176,51,71, 0.5), transparent 70%)", pointerEvents: "none", filter: "blur(20px)" }} />
       )}
 
+      {/* Icon */}
+      <div style={{ color: "var(--pc-feature-text)", marginBottom: "32px" }}>
+        <CubeIcon />
+      </div>
+
       {/* Header section */}
-      <div
-        style={{
-          padding: plan.popular ? "32px 32px 24px" : "40px 32px 24px",
-          borderBottom: "1px solid var(--pc-glass-border)",
-          flexGrow: 0,
-        }}
-      >
+      <div style={{ marginBottom: "24px", position: "relative", zIndex: 1 }}>
         <div
           style={{
             fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
-            fontSize: "11px",
+            fontSize: "10px",
             color: "var(--pc-text3)",
             textTransform: "uppercase",
             letterSpacing: "0.1em",
-            marginBottom: "16px",
+            marginBottom: "10px",
           }}
         >
           {plan.type}
         </div>
         <div
           style={{
-            fontSize: "22px",
-            fontWeight: 800,
-            marginBottom: "20px",
+            fontSize: "20px",
+            fontWeight: 500,
+            marginBottom: "12px",
             color: "var(--pc-text)",
             fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
           }}
         >
           {plan.name}
         </div>
-        <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+        <div style={{ display: "flex", alignItems: "flex-end", gap: "8px", marginBottom: "8px" }}>
           <span
             style={{
-              fontSize: "44px",
-              fontWeight: 800,
+              fontSize: "42px",
+              fontWeight: 700,
               letterSpacing: "-0.04em",
               color: "var(--pc-text)",
               fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
@@ -221,35 +247,50 @@ export function PriceCard({
           >
             {plan.price}
           </span>
-          <span style={{ fontSize: "14px", color: "var(--pc-text2)", fontWeight: 500 }}>{plan.period}</span>
+          {plan.popular && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "4px" }}>
+              <span style={{ fontSize: "10px", color: "var(--pc-badge-discount-text)", background: "var(--pc-badge-discount-bg)", padding: "2px 6px", borderRadius: "4px", width: "fit-content" }}>-15%</span>
+              <span style={{ fontSize: "10px", color: "#FCA5A5", background: "rgba(176,51,71, 0.25)", padding: "2px 6px", borderRadius: "4px", fontWeight: 600, width: "fit-content" }}>Best Value</span>
+            </div>
+          )}
+        </div>
+        <div style={{ fontSize: "12px", color: "var(--pc-period-text)", fontWeight: 400 }}>
+          {plan.period}
         </div>
       </div>
 
+      {/* Description */}
+      <div style={{ fontSize: "14px", color: "var(--pc-desc-text)", marginBottom: "32px", position: "relative", zIndex: 1 }}>
+        {plan.description}
+      </div>
+
       {/* Features & Button section */}
-      <div style={{ padding: "32px", flexGrow: 1, display: "flex", flexDirection: "column" }}>
+      <div style={{ flexGrow: 1, display: "flex", flexDirection: "column", position: "relative", zIndex: 1 }}>
         <ul
           style={{
             listStyle: "none",
             display: "flex",
             flexDirection: "column",
-            gap: "16px",
+            gap: "14px",
             marginBottom: "40px",
             flexGrow: 1,
+            padding: 0,
+            margin: "0 0 32px 0",
           }}
         >
           {plan.features.map((f) => (
             <li
               key={f}
               style={{
-                fontSize: "14px",
-                color: "var(--pc-text2)",
+                fontSize: "13px",
+                color: "var(--pc-feature-text)",
                 display: "flex",
                 gap: "12px",
-                alignItems: "flex-start",
+                alignItems: "center",
                 lineHeight: 1.5,
               }}
             >
-              <span style={{ color: "rgba(176,51,71,0.9)", fontWeight: 700, flexShrink: 0, fontSize: "12px", marginTop: "2px" }}>✓</span>
+              <CheckIcon />
               {f}
             </li>
           ))}
@@ -260,35 +301,25 @@ export function PriceCard({
           style={{
             display: "block",
             width: "100%",
-            padding: "16px",
-            borderRadius: "100px",
-            fontSize: "14px",
-            fontWeight: 700,
+            padding: "14px",
+            borderRadius: "12px",
+            fontSize: "13px",
+            fontWeight: 600,
             textAlign: "center",
             textDecoration: "none",
             transition: "all 0.2s ease",
             fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
-            background: plan.ctaFill ? "rgba(176,51,71,0.8)" : "var(--pc-glass)",
-            color: plan.ctaFill ? "#fff" : "var(--pc-text)",
-            border: plan.ctaFill ? "1px solid rgba(176,51,71,1)" : "1px solid var(--pc-glass-border)",
+            background: plan.ctaFill ? "rgba(176,51,71,1)" : "transparent",
+            color: "var(--pc-text)",
+            border: "1px solid var(--pc-check-border)",
           }}
           onMouseEnter={(e) => {
             const el = e.currentTarget as HTMLElement;
-            if (plan.ctaFill) {
-              el.style.background = "rgba(200,60,80,0.9)";
-            } else {
-              el.style.background = "var(--pc-glass-border)";
-              el.style.borderColor = "var(--pc-glass-border-accent)";
-            }
+            el.style.background = plan.ctaFill ? "rgba(200,60,80,1)" : "rgba(255,255,255,0.05)";
           }}
           onMouseLeave={(e) => {
             const el = e.currentTarget as HTMLElement;
-            if (plan.ctaFill) {
-              el.style.background = "rgba(176,51,71,0.8)";
-            } else {
-              el.style.background = "var(--pc-glass)";
-              el.style.borderColor = "var(--pc-glass-border)";
-            }
+            el.style.background = plan.ctaFill ? "rgba(176,51,71,1)" : "transparent";
           }}
         >
           {plan.ctaLabel}

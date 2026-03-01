@@ -119,9 +119,6 @@ function StratCard({
 
   return (
     <div className={`sc reveal ${delay} ${accent ? "sc--accent" : "sc--muted"} ${isLarge ? "sc--large" : "sc--small"}`}>
-      {/* Corner dot indicator */}
-      <div className="sc-dot" />
-
       {/* Visual area */}
       <div className="sc-visual">
         {visual === "pie" && <PieVisual />}
@@ -154,8 +151,15 @@ function StratCard({
         .sc--small {
           flex: 0.78;
           height: 270px;
-          background: rgba(255, 255, 255, 0.025);
-          border: 1px solid rgba(255, 255, 255, 0.07);
+          background: linear-gradient(
+            158deg,
+            rgba(139, 46, 60, 0.18) 0%,
+            rgba(139, 46, 60, 0.06) 50%,
+            var(--pc-glass) 100%
+          );
+          border: 1px solid rgba(139, 46, 60, 0.3);
+          box-shadow: 0 0 80px rgba(139, 46, 60, 0.08),
+                      inset 0 1px 0 var(--pc-card-inset);
         }
         .sc--large {
           flex: 1.45;
@@ -164,34 +168,24 @@ function StratCard({
             158deg,
             rgba(139, 46, 60, 0.18) 0%,
             rgba(139, 46, 60, 0.06) 50%,
-            rgba(255, 255, 255, 0.02) 100%
+            var(--pc-glass) 100%
           );
           border: 1px solid rgba(139, 46, 60, 0.3);
           box-shadow: 0 0 80px rgba(139, 46, 60, 0.08),
-                      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+                      inset 0 1px 0 var(--pc-card-inset);
         }
         .sc:hover {
           transform: translateY(-4px);
         }
         .sc--small:hover {
-          border-color: rgba(255, 255, 255, 0.13);
-          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+          border-color: rgba(139, 46, 60, 0.48);
+          box-shadow: 0 16px 60px rgba(139, 46, 60, 0.2),
+                      inset 0 1px 0 var(--pc-card-inset);
         }
         .sc--large:hover {
           border-color: rgba(139, 46, 60, 0.48);
           box-shadow: 0 16px 60px rgba(139, 46, 60, 0.2),
-                      inset 0 1px 0 rgba(255, 255, 255, 0.07);
-        }
-        .sc-dot {
-          position: absolute;
-          top: 14px;
-          right: 14px;
-          width: 26px;
-          height: 26px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          z-index: 2;
+                      inset 0 1px 0 var(--pc-card-inset);
         }
         .sc-visual {
           flex: 1;
@@ -203,8 +197,8 @@ function StratCard({
         }
         .sc-text {
           padding: 16px 20px 22px;
-          border-top: 1px solid rgba(255, 255, 255, 0.05);
-          background: rgba(0, 0, 0, 0.2);
+          border-top: 1px solid var(--pc-card-text-border);
+          background: var(--pc-card-text-bg);
           flex-shrink: 0;
         }
         .sc--large .sc-text {
@@ -222,7 +216,7 @@ function StratCard({
           font-size: 15px;
         }
         h3 span {
-          color: #c96070;
+          color: var(--pc-accent-bright);
         }
         p {
           font-size: 12.5px;
@@ -261,7 +255,7 @@ function PieVisual() {
       <circle cx="100" cy="100" r="90" fill="url(#pglow)" />
 
       {/* Track */}
-      <circle cx="100" cy="100" r="62" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="26" />
+      <circle cx="100" cy="100" r="62" fill="none" stroke="var(--pc-bar-track)" strokeWidth="26" />
 
       {/* Segment 1 — bright crimson-pink, 40% */}
       <circle
@@ -288,7 +282,7 @@ function PieVisual() {
       />
 
       {/* Donut hole */}
-      <circle cx="100" cy="100" r="46" fill="#0d0c0e" />
+      <circle cx="100" cy="100" r="46" fill="var(--pc-svg-hole)" />
 
       {/* Center decoration */}
       <circle cx="100" cy="100" r="14" fill="rgba(139,46,60,0.15)" stroke="rgba(201,96,112,0.28)" strokeWidth="1" />
@@ -339,9 +333,9 @@ function PulseVisual() {
 
       {/* Cardinal dots on outer ring */}
       <circle cx="100" cy="12" r="2.5" fill="rgba(201,96,112,0.28)" />
-      <circle cx="166" cy="57" r="2"   fill="rgba(201,96,112,0.22)" />
-      <circle cx="166" cy="103" r="2"  fill="rgba(201,96,112,0.18)" />
-      <circle cx="100" cy="148" r="2"  fill="rgba(201,96,112,0.18)" />
+      <circle cx="166" cy="57" r="2" fill="rgba(201,96,112,0.22)" />
+      <circle cx="166" cy="103" r="2" fill="rgba(201,96,112,0.18)" />
+      <circle cx="100" cy="148" r="2" fill="rgba(201,96,112,0.18)" />
     </svg>
   );
 }
@@ -363,7 +357,7 @@ function LoopVisual() {
           <rect x="168" y={y} width="16" height="20" rx="5" fill="rgba(61,21,32,0.65)" />
           <text
             x="63" y={y + 14}
-            fill="rgba(255,255,255,0.18)"
+            fill="var(--pc-text3)"
             fontSize="7.5"
             fontFamily="monospace"
             textAnchor="middle"
@@ -403,7 +397,7 @@ function CeilingVisual() {
     >
       <defs>
         <linearGradient id="carea" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#8B2E3C" stopOpacity="0.3" />
+          <stop offset="0%" stopColor="#8B2E3C" stopOpacity="0.3" />
           <stop offset="100%" stopColor="#8B2E3C" stopOpacity="0.02" />
         </linearGradient>
       </defs>
@@ -411,7 +405,7 @@ function CeilingVisual() {
       {/* Grid lines */}
       {([42, 82, 122] as number[]).map(y => (
         <line key={y} x1="0" y1={y} x2="220" y2={y}
-          stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+          stroke="var(--pc-bar-track)" strokeWidth="1" />
       ))}
 
       {/* Area fill */}

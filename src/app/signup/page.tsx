@@ -45,7 +45,7 @@ export default function SignupPage() {
                           ? "var(--pc-accent)"
                           : arr.indexOf(step) > i
                           ? "rgba(139,46,60,0.3)"
-                          : "rgba(255,255,255,0.06)",
+                          : "var(--pc-glass)",
                       border: `1px solid ${step === s ? "var(--pc-accent-bright)" : "var(--pc-glass-border)"}`,
                       display: "flex",
                       alignItems: "center",
