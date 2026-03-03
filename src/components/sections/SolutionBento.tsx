@@ -27,7 +27,7 @@ export default function SolutionBento() {
               lineHeight: 1.65,
             }}
           >
-            You&apos;re running promos — but keep hitting the same walls every time.
+            You&apos;re running promos, but you keep hitting the same walls every time.
           </p>
         </div>
 
@@ -40,7 +40,7 @@ export default function SolutionBento() {
             delay=""
             title="Hard to "
             highlight="explain your results"
-            desc={'Clients ask "Why these keys?" "What drove growth?" "Why no orders?" — and you scramble for answers.'}
+            desc={'Clients ask "Why these keys?" "What drove growth?" "Why no orders?" and you end up scrambling for answers.'}
           />
           <StratCard
             size="small"

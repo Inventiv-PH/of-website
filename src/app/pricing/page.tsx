@@ -18,7 +18,7 @@ const faqs = [
   },
   {
     q: "What's the difference between the monthly plan and one-time packs?",
-    a: "The monthly plan gives you ongoing access to all features — subscriber bots, engagement automation, unlimited campaigns. One-time packs are single purchases for a fixed number of subscribers or engagement actions, with no subscription commitment.",
+    a: "The monthly plan gives you ongoing access to all features: subscriber bots, engagement automation, and unlimited campaigns. One-time packs are single purchases for a fixed number of subscribers or engagement actions, with no subscription commitment.",
   },
   {
     q: "Can I cancel the monthly plan anytime?",
@@ -30,7 +30,7 @@ const faqs = [
   },
   {
     q: "What payment methods are accepted?",
-    a: "We accept major credit and debit cards via Stripe. Cryptocurrency options may be available — contact support for details.",
+    a: "We accept major credit and debit cards via Stripe. Cryptocurrency options may be available. Contact support for details.",
   },
   {
     q: "Is there a refund policy?",

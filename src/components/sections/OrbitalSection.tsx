@@ -80,7 +80,7 @@ export default function OrbitalSection() {
                 marginBottom: "20px",
               }}
             >
-              Anyone can send bots. We build accounts that actually behave like users — three coordinated layers working in tandem.
+              Anyone can send bots. We build accounts that actually behave like users. Three coordinated layers working in tandem.
             </p>
 
             {/* Stats row */}
