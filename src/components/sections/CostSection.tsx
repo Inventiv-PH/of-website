@@ -135,14 +135,16 @@ export default function CostSection() {
 
             <p
               style={{
-                fontSize: "14px",
-                color: "var(--pc-text3)",
+                fontSize: "20px",
+                color: "var(--pc-text)",
                 marginTop: "36px",
-                fontStyle: "italic",
+                fontWeight: 800,
                 paddingLeft: "66px",
+                fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
+                letterSpacing: "-0.01em",
               }}
             >
-              There&apos;s a better way to complete your agreements.
+              What if you could finish agreements faster <span style={{ color: "var(--pc-accent-bright)" }}><br />without losing real fans?</span>
             </p>
           </div>
 
