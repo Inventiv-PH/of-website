@@ -40,7 +40,7 @@ export default function SolutionBento() {
             delay=""
             title="Hard to "
             highlight="explain your results"
-            desc={'Clients ask "Why these keys?" "What drove growth?" "Why no orders?" — and you scramble for answers.'}
+            desc={'Creators ask "Why these keys?" "What drove growth?" "Why no orders?" — and you have no data to back it up.'}
           />
           <StratCard
             size="small"
@@ -58,7 +58,7 @@ export default function SolutionBento() {
             title="The "
             highlight="same approach"
             after=", every time"
-            desc="Repeating identical setups without strategy, numbers, or structure to back it up."
+            desc="You run the same setup every time with nothing to adjust. Results go flat and you don't know why."
           />
           <StratCard
             size="large"
@@ -67,7 +67,7 @@ export default function SolutionBento() {
             delay="delay-3"
             title="Hitting a "
             highlight="ceiling"
-            desc="You want more volume but fear things breaking when you scale beyond what you can handle alone."
+            desc="You want more volume but your workflow can't keep up — mistakes multiply, listings slip, and margins shrink."
           />
         </div>
       </div>
