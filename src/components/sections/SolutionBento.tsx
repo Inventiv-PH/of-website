@@ -40,7 +40,7 @@ export default function SolutionBento() {
             delay=""
             title="Hard to "
             highlight="explain your results"
-            desc={'Creators ask "Why these keys?" "What drove growth?" "Why no orders?" — and you have no data to back it up.'}
+            desc={'Creators ask "Why these keys?" "What drove growth?" "Why no orders?" and you have no data to back it up.'}
           />
           <StratCard
             size="small"
@@ -67,7 +67,7 @@ export default function SolutionBento() {
             delay="delay-3"
             title="Hitting a "
             highlight="ceiling"
-            desc="You want more volume but your workflow can't keep up — mistakes multiply, listings slip, and margins shrink."
+            desc="You want more volume but your workflow can't keep up; mistakes multiply, listings slip, and margins shrink."
           />
         </div>
       </div>
