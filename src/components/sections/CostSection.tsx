@@ -144,7 +144,7 @@ export default function CostSection() {
                 letterSpacing: "-0.01em",
               }}
             >
-              What if you could finish agreements faster <span style={{ color: "var(--pc-accent-bright)" }}><br />without losing real fans?</span>
+              What if you could finish agreements faster without losing real fans?
             </p>
           </div>
 
