@@ -30,7 +30,7 @@ const troubleshootItems = [
   },
   {
     q: "The app won't launch after installation",
-    a: "Ensure your OS is up to date (Windows 10+ / macOS 12+). If the issue persists, try re-downloading the installer — a corrupted download is the most common cause.",
+    a: "Ensure your OS is up to date (Windows 10+ / macOS 12+). If the issue persists, try re-downloading the installer. A corrupted download is the most common cause.",
   },
   {
     q: "I don't see my subscription after signing in",

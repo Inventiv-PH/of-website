@@ -27,7 +27,7 @@ export default function SolutionBento() {
               lineHeight: 1.65,
             }}
           >
-            You&apos;re running promos — but keep hitting the same walls every time.
+            You&apos;re running promos, but you keep hitting the same walls every time.
           </p>
         </div>
 
