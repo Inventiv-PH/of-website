@@ -41,7 +41,7 @@ export default function SolutionBento() {
             title=""
             highlight="Visibility"
             after=" at Scale"
-            desc="Tracking hundreds of accounts by hand is a total headache. Our dashboard gives you live updates so you can make quick changes instead of just guessing."
+            desc="Tracking hundreds of accounts by hand is a total headache. Our dashboard gives you live updates."
           />
           <StratCard
             size="small"
