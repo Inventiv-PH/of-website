@@ -38,9 +38,10 @@ export default function SolutionBento() {
             visual="pie"
             accent
             delay=""
-            title="Hard to "
-            highlight="explain your results"
-            desc={'Creators ask "Why these keys?" "What drove growth?" "Why no orders?" and you have no data to back it up.'}
+            title=""
+            highlight="Visibility"
+            after=" at Scale"
+            desc="Tracking hundreds of accounts by hand is a total headache. Our dashboard gives you live updates so you can make quick changes instead of just guessing."
           />
           <StratCard
             size="small"
@@ -58,7 +59,7 @@ export default function SolutionBento() {
             title="The "
             highlight="same approach"
             after=", every time"
-            desc="You run the same setup every time with nothing to adjust. Results go flat and you don't know why."
+            desc="Without a real strategy, you are just repeating mistakes instead of scaling."
           />
           <StratCard
             size="large"
@@ -67,7 +68,7 @@ export default function SolutionBento() {
             delay="delay-3"
             title="Hitting a "
             highlight="ceiling"
-            desc="You want more volume but your workflow can't keep up; mistakes multiply, listings slip, and margins shrink."
+            desc="Manual work does not scale. As you add more accounts, human errors grow and your profits shrink."
           />
         </div>
       </div>
@@ -76,7 +77,7 @@ export default function SolutionBento() {
         .strat-row {
           display: flex;
           gap: 14px;
-          align-items: flex-end;
+          align-items: stretch;
         }
         @media (max-width: 860px) {
           .strat-row {
@@ -149,8 +150,8 @@ function StratCard({
                       border-color 0.3s ease;
         }
         .sc--small {
-          flex: 0.78;
-          height: 270px;
+          flex: 1;
+          height: 340px;
           background: linear-gradient(
             158deg,
             rgba(139, 46, 60, 0.18) 0%,
@@ -162,8 +163,8 @@ function StratCard({
                       inset 0 1px 0 var(--pc-card-inset);
         }
         .sc--large {
-          flex: 1.45;
-          height: 390px;
+          flex: 1;
+          height: 340px;
           background: linear-gradient(
             158deg,
             rgba(139, 46, 60, 0.18) 0%,
