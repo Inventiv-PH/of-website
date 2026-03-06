@@ -201,7 +201,7 @@ export function PriceCard({
       }}
     >
       {plan.popular && (
-        <div style={{ position: "absolute", top: 0, right: 0, width: "180px", height: "180px", background: "radial-gradient(circle at top right, rgba(176,51,71, 0.5), transparent 70%)", pointerEvents: "none", filter: "blur(20px)" }} />
+        <div style={{ position: "absolute", top: 0, right: 0, width: "var(--pc-popular-glow-size)", height: "var(--pc-popular-glow-size)", background: "var(--pc-popular-glow)", pointerEvents: "none", filter: "var(--pc-popular-glow-blur)" }} />
       )}
 
       {/* Icon */}
@@ -234,11 +234,11 @@ export function PriceCard({
         >
           {plan.name}
         </div>
-        <div style={{ display: "flex", alignItems: "flex-end", gap: "8px", marginBottom: "8px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
           <span
             style={{
               fontSize: "42px",
-              fontWeight: 700,
+              fontWeight: 800,
               letterSpacing: "-0.04em",
               color: "var(--pc-text)",
               fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
@@ -248,9 +248,9 @@ export function PriceCard({
             {plan.price}
           </span>
           {plan.popular && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "4px" }}>
-              <span style={{ fontSize: "10px", color: "var(--pc-badge-discount-text)", background: "var(--pc-badge-discount-bg)", padding: "2px 6px", borderRadius: "4px", width: "fit-content" }}>-15%</span>
-              <span style={{ fontSize: "10px", color: "#FCA5A5", background: "rgba(176,51,71, 0.25)", padding: "2px 6px", borderRadius: "4px", fontWeight: 600, width: "fit-content" }}>Best Value</span>
+            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              <span style={{ fontSize: "11px", fontFamily: "var(--font-inter-var), 'Inter', sans-serif", color: "#10b981", background: "rgba(16, 185, 129, 0.12)", padding: "4px 10px", borderRadius: "100px", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", lineHeight: 1, width: "fit-content" }}>SAVE 15%</span>
+              <span style={{ fontSize: "11px", fontFamily: "var(--font-inter-var), 'Inter', sans-serif", color: "#e11d48", background: "rgba(225, 29, 72, 0.12)", padding: "4px 10px", borderRadius: "100px", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", lineHeight: 1, width: "fit-content" }}>BEST VALUE</span>
             </div>
           )}
         </div>
@@ -310,8 +310,8 @@ export function PriceCard({
             transition: "all 0.2s ease",
             fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
             background: plan.ctaFill ? "rgba(176,51,71,1)" : "transparent",
-            color: "var(--pc-text)",
-            border: "1px solid var(--pc-check-border)",
+            color: plan.ctaFill ? "#fff" : "var(--pc-text)",
+            border: plan.ctaFill ? "1px solid rgba(176,51,71,1)" : "1px solid var(--pc-check-border)",
           }}
           onMouseEnter={(e) => {
             const el = e.currentTarget as HTMLElement;

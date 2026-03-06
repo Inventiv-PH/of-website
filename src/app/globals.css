@@ -112,12 +112,12 @@
   --pc-glass-border: rgba(255, 255, 255, 0.08);
   --pc-glass-border-accent: rgba(139, 46, 60, 0.3);
   --pc-grid-size: 52px;
-  --pc-grid-line: rgba(255, 255, 255, 0.025);
+  --pc-grid-line: transparent;
 
   /* Card / panel surfaces */
   --pc-card-bg: rgba(10, 11, 14, 0.95);
   --pc-card-bg-alt: rgba(18, 18, 24, 0.5);
-  --pc-card-bg-popular: linear-gradient(145deg, rgba(176,51,71,0.2) 0%, rgba(20,15,20,0.8) 100%);
+  --pc-card-bg-popular: linear-gradient(145deg, rgba(176, 51, 71, 0.2) 0%, rgba(20, 15, 20, 0.8) 100%);
   --pc-card-border: rgba(255, 255, 255, 0.05);
   --pc-card-border-accent: rgba(139, 46, 60, 0.25);
   --pc-card-inset: rgba(255, 255, 255, 0.05);
@@ -175,6 +175,20 @@
   --pc-badge-discount-bg: rgba(255, 255, 255, 0.1);
   --pc-badge-discount-text: rgba(255, 255, 255, 0.5);
 
+  /* Status Badges */
+  --pc-badge-green-bg: rgba(16, 185, 129, 0.15);
+  --pc-badge-green-text: #34d399;
+  --pc-badge-green-border: rgba(16, 185, 129, 0.3);
+
+  --pc-badge-accent-bg: rgba(176, 51, 71, 0.15);
+  --pc-badge-accent-text: #ff758f;
+  --pc-badge-accent-border: rgba(176, 51, 71, 0.3);
+
+  /* Popular card glow */
+  --pc-popular-glow-size: 180px;
+  --pc-popular-glow: radial-gradient(circle at top right, rgba(176, 51, 71, 0.5), transparent 70%);
+  --pc-popular-glow-blur: blur(20px);
+
   /* AnimatedLines opacity */
   --pc-lines-opacity: 1;
 }
@@ -190,14 +204,14 @@ html.light {
   --pc-glass: rgba(0, 0, 0, 0.03);
   --pc-glass-border: rgba(0, 0, 0, 0.09);
   --pc-glass-border-accent: rgba(139, 46, 60, 0.22);
-  --pc-grid-line: rgba(0, 0, 0, 0.055);
+  --pc-grid-line: transparent;
 
   /* Card / panel surfaces */
   --pc-card-bg: rgba(255, 255, 255, 0.95);
   --pc-card-bg-alt: rgba(255, 255, 255, 0.7);
-  --pc-card-bg-popular: linear-gradient(145deg, rgba(176,51,71,0.1) 0%, rgba(255,255,255,0.9) 100%);
-  --pc-card-border: rgba(0, 0, 0, 0.08);
-  --pc-card-border-accent: rgba(139, 46, 60, 0.2);
+  --pc-card-bg-popular: linear-gradient(145deg, rgba(176, 51, 71, 0.12) 0%, rgba(255, 255, 255, 0.95) 100%);
+  --pc-card-border: rgba(0, 0, 0, 0.1);
+  --pc-card-border-accent: rgba(139, 46, 60, 0.28);
   --pc-card-inset: rgba(0, 0, 0, 0.03);
 
   /* Notification / floating elements */
@@ -233,14 +247,14 @@ html.light {
   --pc-stroke-outline: rgba(0, 0, 0, 0.15);
 
   /* Check icon */
-  --pc-check-bg: rgba(0, 0, 0, 0.04);
-  --pc-check-border: rgba(0, 0, 0, 0.1);
-  --pc-check-stroke: rgba(15, 17, 21, 0.7);
+  --pc-check-bg: rgba(176, 51, 71, 0.06);
+  --pc-check-border: rgba(176, 51, 71, 0.2);
+  --pc-check-stroke: rgba(176, 51, 71, 0.75);
 
   /* Feature text colors */
-  --pc-feature-text: rgba(15, 17, 21, 0.6);
-  --pc-period-text: rgba(15, 17, 21, 0.4);
-  --pc-desc-text: rgba(15, 17, 21, 0.7);
+  --pc-feature-text: rgba(15, 17, 21, 0.72);
+  --pc-period-text: rgba(15, 17, 21, 0.5);
+  --pc-desc-text: rgba(15, 17, 21, 0.78);
 
   /* Card text overlay */
   --pc-card-text-bg: rgba(255, 255, 255, 0.5);
@@ -252,6 +266,20 @@ html.light {
   /* Badge discount */
   --pc-badge-discount-bg: rgba(0, 0, 0, 0.06);
   --pc-badge-discount-text: rgba(15, 17, 21, 0.5);
+
+  /* Status Badges */
+  --pc-badge-green-bg: #ecfdf5;
+  --pc-badge-green-text: #059669;
+  --pc-badge-green-border: #a7f3d0;
+
+  --pc-badge-accent-bg: #fff1f2;
+  --pc-badge-accent-text: #e11d48;
+  --pc-badge-accent-border: #fecdd3;
+
+  /* Popular card glow */
+  --pc-popular-glow-size: 280px;
+  --pc-popular-glow: radial-gradient(circle at top right, rgba(176, 51, 71, 0.18), transparent 70%);
+  --pc-popular-glow-blur: blur(40px);
 
   /* AnimatedLines opacity */
   --pc-lines-opacity: 0.3;
@@ -766,6 +794,7 @@ html.light {
   transition: opacity 0.4s ease;
   mix-blend-mode: screen;
 }
+
 html.light .animated-lines-canvas {
   opacity: 0.25;
   mix-blend-mode: multiply;

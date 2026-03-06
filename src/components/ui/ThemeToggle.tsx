@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function SunIcon() {
   return (
@@ -27,12 +27,11 @@ function MoonIcon() {
 }
 
 export default function ThemeToggle() {
-  const [isLight, setIsLight] = useState(() => {
-    if (typeof document !== "undefined") {
-      return document.documentElement.classList.contains("light");
-    }
-    return false;
-  });
+  const [isLight, setIsLight] = useState(false);
+
+  useEffect(() => {
+    setIsLight(document.documentElement.classList.contains("light"));
+  }, []);
 
   function toggleTheme() {
     const html = document.documentElement;

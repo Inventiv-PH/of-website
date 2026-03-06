@@ -133,19 +133,6 @@ export default function CostSection() {
               ))}
             </div>
 
-            <p
-              style={{
-                fontSize: "20px",
-                color: "var(--pc-text)",
-                marginTop: "36px",
-                fontWeight: 800,
-                paddingLeft: "66px",
-                fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              What if you could finish agreements faster without losing real fans?
-            </p>
           </div>
 
           {/* ── Right: Comparison dashboard ── */}
@@ -376,6 +363,23 @@ export default function CostSection() {
           </div>
 
         </div>
+
+        {/* Closing question — full width, centered */}
+        <p
+          className="reveal"
+          style={{
+            fontSize: "clamp(18px, 2.5vw, 24px)",
+            color: "var(--pc-text)",
+            marginTop: "48px",
+            fontWeight: 500,
+            fontStyle: "italic",
+            fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
+            letterSpacing: "-0.01em",
+            textAlign: "center",
+          }}
+        >
+          What if there was a better way to complete agreements without losing real fans?
+        </p>
       </div>
 
       <style jsx>{`

@@ -92,13 +92,13 @@ export default function DownloadPage() {
             >
               <OSButton
                 os="Windows"
-                icon="⊞"
+                icon={<WindowsIcon />}
                 subtitle="Windows 10 / 11"
                 href="#"
               />
               <OSButton
                 os="macOS"
-                icon=""
+                icon={<AppleIcon />}
                 subtitle="macOS 12 Monterey+"
                 href="#"
               />
@@ -279,6 +279,22 @@ export default function DownloadPage() {
   );
 }
 
+function WindowsIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3 12V6.5l8-1.1V12H3zm0 .5h8v6.6l-8-1.1V12.5zM12.5 12V5.2l8.5-1.2v8H12.5zm0 .5h8.5v8l-8.5-1.2V12.5z" />
+    </svg>
+  );
+}
+
+function AppleIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+    </svg>
+  );
+}
+
 function OSButton({
   os,
   icon,
@@ -286,7 +302,7 @@ function OSButton({
   href,
 }: {
   os: string;
-  icon: string;
+  icon: React.ReactNode;
   subtitle: string;
   href: string;
 }) {
@@ -297,31 +313,31 @@ function OSButton({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "10px",
-        background: "var(--pc-glass)",
-        border: "1px solid var(--pc-glass-border)",
+        gap: "12px",
+        background: "var(--pc-card-bg)",
+        border: "1px solid var(--pc-card-border)",
         borderRadius: "16px",
-        padding: "20px 32px",
+        padding: "28px 36px",
         textDecoration: "none",
         transition: "all 0.25s cubic-bezier(0.4,0,0.2,1)",
         flex: "1",
-        maxWidth: "220px",
+        maxWidth: "260px",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement;
-        el.style.borderColor = "var(--pc-glass-border-accent)";
+        el.style.borderColor = "var(--pc-card-border-accent)";
         el.style.boxShadow = "0 0 30px rgba(139,46,60,0.12)";
         el.style.transform = "translateY(-2px)";
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement;
-        el.style.borderColor = "var(--pc-glass-border)";
+        el.style.borderColor = "var(--pc-card-border)";
         el.style.boxShadow = "none";
         el.style.transform = "none";
       }}
     >
-      <span style={{ fontSize: "32px" }}>{icon}</span>
-      <div>
+      <span style={{ color: "var(--pc-text)" }}>{icon}</span>
+      <div style={{ textAlign: "center" }}>
         <div
           style={{
             fontSize: "15px",
@@ -336,7 +352,7 @@ function OSButton({
           style={{
             fontSize: "11px",
             color: "var(--pc-text3)",
-            marginTop: "4px",
+            marginTop: "6px",
             fontFamily: "var(--font-jetbrains-var), 'JetBrains Mono', monospace",
           }}
         >

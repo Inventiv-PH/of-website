@@ -46,26 +46,6 @@ export default function Footer() {
         overflow: "hidden",
       }}
     >
-      {/* Watermark */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "-20px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          fontSize: "clamp(40px, 15vw, 140px)",
-          fontWeight: 900,
-          whiteSpace: "nowrap",
-          color: "var(--pc-watermark)",
-          letterSpacing: "-0.05em",
-          pointerEvents: "none",
-          lineHeight: 1,
-          fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
-        }}
-      >
-        PROMOCORE
-      </div>
-
       <div
         style={{
           maxWidth: "1100px",
@@ -143,18 +123,55 @@ export default function Footer() {
         ))}
       </div>
 
-      {/* Status bar */}
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+      {/* ── Closing Banner ── */}
+      <div
+        className="footer-banner"
+        style={{
+          marginTop: "56px",
+          position: "relative",
+          overflow: "hidden",
+          borderTop: "1px solid var(--pc-glass-border)",
+          padding: "32px 0 0",
+        }}
+      >
+        {/* Watermark sits behind the status row */}
         <div
           style={{
-            marginTop: "48px",
-            paddingTop: "20px",
-            borderTop: "1px solid var(--pc-glass-border)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "clamp(36px, 12vw, 110px)",
+              fontWeight: 800,
+              whiteSpace: "nowrap",
+              color: "var(--pc-watermark)",
+              letterSpacing: "0.08em",
+              lineHeight: 1,
+              fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
+              textTransform: "uppercase",
+              userSelect: "none",
+              pointerEvents: "none",
+            }}
+          >
+            PromoCore
+          </span>
+        </div>
+
+        {/* Status row overlaid at the baseline of the watermark */}
+        <div
+          style={{
+            maxWidth: "1100px",
+            margin: "-6px auto 0",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             flexWrap: "wrap",
             gap: "12px",
+            padding: "0 5%",
           }}
         >
           <span
@@ -168,7 +185,6 @@ export default function Footer() {
             © 2025 PromoCore · All rights reserved
           </span>
           <span
-            className="status-ok"
             style={{
               display: "flex",
               alignItems: "center",

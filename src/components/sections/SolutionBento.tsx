@@ -40,7 +40,7 @@ export default function SolutionBento() {
             delay=""
             title=""
             highlight="Visibility"
-            after=" at Scale"
+            after=" at scale"
             desc="Tracking hundreds of accounts by hand is a total headache. Our dashboard gives you live updates."
           />
           <StratCard
