@@ -35,7 +35,7 @@ export default function SolutionBento() {
         <div className="strat-row">
           <StratCard
             size="large"
-            visual="pie"
+            visual="eye"
             accent
             delay=""
             title=""
@@ -108,7 +108,7 @@ function StratCard({
   desc,
 }: {
   size: "large" | "small";
-  visual: "pie" | "pulse" | "loop" | "ceiling";
+  visual: "pie" | "pulse" | "loop" | "ceiling" | "eye";
   accent?: boolean;
   delay: string;
   title: string;
@@ -122,6 +122,7 @@ function StratCard({
     <div className={`sc reveal ${delay} ${accent ? "sc--accent" : "sc--muted"} ${isLarge ? "sc--large" : "sc--small"}`}>
       {/* Visual area */}
       <div className="sc-visual">
+        {visual === "eye" && <EyeVisual />}
         {visual === "pie" && <PieVisual />}
         {visual === "pulse" && <PulseVisual />}
         {visual === "loop" && <LoopVisual />}
@@ -231,6 +232,86 @@ function StratCard({
 }
 
 /* ─── SVG Visuals ─── */
+
+function EyeVisual() {
+  return (
+    <svg
+      viewBox="0 0 200 170"
+      style={{ width: "100%", height: "100%", maxHeight: "230px" }}
+      aria-hidden="true"
+    >
+      <defs>
+        <radialGradient id="eglow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="rgba(222,80,112,0.2)" />
+          <stop offset="100%" stopColor="rgba(139,46,60,0)" />
+        </radialGradient>
+        <radialGradient id="eiris" cx="40%" cy="38%" r="60%">
+          <stop offset="0%" stopColor="#C96070" />
+          <stop offset="100%" stopColor="#4A1825" />
+        </radialGradient>
+      </defs>
+
+      {/* Ambient glow */}
+      <ellipse cx="100" cy="85" rx="85" ry="70" fill="url(#eglow)" />
+
+      {/* Scan lines */}
+      {([55, 70, 85, 100, 115] as number[]).map(y => (
+        <line key={y} x1="20" y1={y} x2="180" y2={y} stroke="var(--pc-bar-track)" strokeWidth="1" />
+      ))}
+
+      {/* Eye fill area */}
+      <path
+        d="M 20 85 Q 60 35 100 30 Q 140 35 180 85 Q 140 135 100 140 Q 60 135 20 85 Z"
+        fill="rgba(139,46,60,0.06)"
+      />
+
+      {/* Upper lid */}
+      <path
+        d="M 20 85 Q 60 35 100 30 Q 140 35 180 85"
+        fill="none" stroke="#8B2E3C" strokeWidth="1.5" strokeOpacity="0.6"
+      />
+
+      {/* Lower lid */}
+      <path
+        d="M 20 85 Q 60 135 100 140 Q 140 135 180 85"
+        fill="none" stroke="#8B2E3C" strokeWidth="1.5" strokeOpacity="0.6"
+      />
+
+      {/* Iris outer ring */}
+      <circle cx="100" cy="85" r="34"
+        fill="rgba(139,46,60,0.12)"
+        stroke="#8B2E3C" strokeWidth="1.5" strokeOpacity="0.5"
+      />
+
+      {/* Iris */}
+      <circle cx="100" cy="85" r="26" fill="url(#eiris)" />
+
+      {/* Iris inner detail ring */}
+      <circle cx="100" cy="85" r="20"
+        fill="none" stroke="rgba(240,112,144,0.25)" strokeWidth="1"
+      />
+
+      {/* Pupil */}
+      <circle cx="100" cy="85" r="11" fill="rgba(10,5,8,0.85)" />
+
+      {/* Catchlight */}
+      <circle cx="108" cy="76" r="4" fill="rgba(240,112,144,0.55)" />
+      <circle cx="110" cy="75" r="1.5" fill="rgba(255,200,210,0.7)" />
+
+      {/* Annotation dot — upper right */}
+      <line x1="166" y1="46" x2="178" y2="32" stroke="#E8607A" strokeWidth="1" strokeOpacity="0.4" />
+      <circle cx="180" cy="30" r="5" fill="rgba(240,112,144,0.14)" stroke="#E8607A" strokeWidth="1.5" />
+      <circle cx="180" cy="30" r="2" fill="#E8607A" />
+
+      {/* Annotation dot — lower left */}
+      <line x1="42" y1="120" x2="28" y2="134" stroke="#8B2E3C" strokeWidth="1" strokeOpacity="0.4" />
+      <circle cx="26" cy="136" r="4" fill="rgba(139,46,60,0.22)" stroke="rgba(139,46,60,0.5)" strokeWidth="1" />
+
+      {/* Ambient dot */}
+      <circle cx="178" cy="90" r="2.5" fill="rgba(201,96,112,0.3)" />
+    </svg>
+  );
+}
 
 function PieVisual() {
   // Donut chart: C = 2π×62 ≈ 390
