@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/layout/SmoothScroll";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const manrope = Manrope({
   variable: "--font-manrope-var",
@@ -49,6 +50,7 @@ export default function RootLayout({
         className={`${manrope.variable} ${jetbrainsMono.variable} ${inter.variable} antialiased`}
       >
         <SmoothScroll>{children}</SmoothScroll>
+        <ThemeToggle />
       </body>
     </html>
   );
