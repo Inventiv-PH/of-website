@@ -5,29 +5,29 @@ import { useReveal } from "@/hooks/useReveal";
 const bullets = [
   {
     num: "01",
-    title: "Funnel Dilution",
-    text: "You redirect real earners to other pages, thinning your core funnel and hurting long-term retention.",
+    title: "Lost Revenue",
+    text: "Promo shoutouts send your paying fans to other pages. That's money walking out of your funnel.",
   },
   {
     num: "02",
-    title: "Content Exhaustion",
-    text: "You over-post to hit required numbers and burn through your catalog faster than you can refill it.",
+    title: "Over-Posting",
+    text: "Hitting required numbers means flooding your feed. Your content library burns out faster than you can replace it.",
   },
   {
     num: "03",
-    title: "Growth Stall",
-    text: "Fulfilling agreements eats time that should go toward building your own acquisition strategy.",
+    title: "Slower Growth",
+    text: "Every hour spent fulfilling promos is an hour not spent building your own audience.",
   },
   {
     num: "04",
-    title: "Capacity Lock-In",
-    text: "Drawn-out agreements hold your slots hostage — you can't take new clients until old ones clear.",
+    title: "Longer Agreements",
+    text: "Deals that should wrap up in days end up stretching into weeks.",
   },
 ];
 
 const comparisons = [
   {
-    label: "TIME_SPENT — PER WEEK",
+    label: "TIME_SPENT // PER WEEK",
     beforeVal: "~12", beforeUnit: "hrs",
     afterVal: "~2", afterUnit: "hrs",
     beforePct: "85%",
@@ -35,7 +35,7 @@ const comparisons = [
     reduction: "↓ 6× less",
   },
   {
-    label: "AGREEMENT_COMPLETION — DAYS",
+    label: "AGREEMENT_COMPLETION // DAYS",
     beforeVal: "9", beforeUnit: "days",
     afterVal: "2", afterUnit: "days",
     beforePct: "85%",
@@ -74,7 +74,7 @@ export default function CostSection() {
                 color: "var(--pc-text)",
               }}
             >
-              Manual Promos Are<br />Bleeding Your Operation
+              Promo Strategies Cost You<br />More Than Just Real Fans
             </h2>
 
             {/* Numbered bullet items */}
@@ -135,14 +135,16 @@ export default function CostSection() {
 
             <p
               style={{
-                fontSize: "14px",
-                color: "var(--pc-text3)",
+                fontSize: "20px",
+                color: "var(--pc-text)",
                 marginTop: "36px",
-                fontStyle: "italic",
+                fontWeight: 800,
                 paddingLeft: "66px",
+                fontFamily: "var(--font-manrope-var), Manrope, sans-serif",
+                letterSpacing: "-0.01em",
               }}
             >
-              There&apos;s a better way to run your agreements.
+              What if you could finish agreements faster without losing real fans?
             </p>
           </div>
 
